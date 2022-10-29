@@ -95,7 +95,7 @@ template<typename T> sf_inline constexpr T E
 template<typename T> sf_inline constexpr T EULER
 {static_cast<T>(0.577215664901532860606512090082402431)};
 
-/* Golden rhsatio */
+/* Golden Ratio */
 template<typename T> sf_inline constexpr T PHI
 {static_cast<T>(1.618033988749894848204586834365638118)};
 
@@ -156,7 +156,7 @@ quintic(T a) {
 #define field_sizeof(t, f) (sizeof(((t*)0)->f))
 
 /*---------------------------------*/
-/* Type rhseinterpretation Functions */
+/* Type Reinterpretation Functions */
 /*---------------------------------*/
 
 /* Reinterprets a 32-bit f32 as a 32-bit unsigned integer. Avoids the
@@ -269,7 +269,7 @@ clamped_lerp(T from, T to, T t) {
     return lerp(from, to, clamp_zero_to_one(t));
 }
 
-/* Step function. rhseturns 0.0 if x < edge, else 1.0. */
+/* Step function. Returns 0.0 if x < edge, else 1.0. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr T 
 step(T edge, T x) {
