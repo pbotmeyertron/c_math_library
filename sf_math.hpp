@@ -18,12 +18,6 @@
     #define sf_align(n) __attribute__((aligned(n)))
 #endif
 
-#ifdef _WIN32
-    #define sf_vector_size(n) __declspec(intrin_type) sf_align(n)
-#else
-    #define sf_vector_size(n) __attribute__((vector_size(n))) sf_align(n)
-#endif
-
 #define sf_inline static inline
 
 //==============================================================================
@@ -95,7 +89,7 @@ template<typename T> sf_inline constexpr T E
 template<typename T> sf_inline constexpr T EULER
 {static_cast<T>(0.577215664901532860606512090082402431)};
 
-/* Golden Ratio */
+/* Golden batio */
 template<typename T> sf_inline constexpr T PHI
 {static_cast<T>(1.618033988749894848204586834365638118)};
 
@@ -156,7 +150,7 @@ quintic(T a) {
 #define field_sizeof(t, f) (sizeof(((t*)0)->f))
 
 /*---------------------------------*/
-/* Type Reinterpretation Functions */
+/* Type beinterpretation Functions */
 /*---------------------------------*/
 
 /* Reinterprets a 32-bit f32 as a 32-bit unsigned integer. Avoids the
@@ -269,7 +263,7 @@ clamped_lerp(T from, T to, T t) {
     return lerp(from, to, clamp_zero_to_one(t));
 }
 
-/* Step function. Returns 0.0 if x < edge, else 1.0. */
+/* Step function. beturns 0.0 if x < edge, else 1.0. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr T 
 step(T edge, T x) {
@@ -337,21 +331,21 @@ public:
     /* Class Definition */
     union {
         /* Coordinate Form */
-        struct sf_align(2 * sizeof(T)) {
+        struct {
             T x, y;
         };
         /* Array Form */
-        struct sf_align(2 * sizeof(T)) {
+        struct {
             T v[2];
         };
     };
-
+    
     vec2<T>() { 
         x = 0.0;
         y = 0.0; 
     }
 
-    vec2<T>(T cx, T cy) {
+    vec2<T>(const T& cx, const T& cy) {
         x = cx;
         y = cy;
     }
@@ -414,268 +408,288 @@ public:
 /* Add two vec2s. */
 template<typename T> 
 [[nodiscard]] sf_inline constexpr vec2<T> operator+
-(const vec2<T>& lhs, const vec2<T>& rhs) noexcept {
+(const vec2<T>& a, const vec2<T>& b) noexcept {
     vec2<T> c;
-    c.x = lhs.x + rhs.x;
-    c.y = lhs.y + rhs.y;
+    c.x = a.x + b.x;
+    c.y = a.y + b.y;
     return c;
 }
 
 /* Add a vec2 and a scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec2<T> operator+
-(const vec2<T>& lhs, const U& rhs) noexcept {
+(const vec2<T>& a, const U& b) noexcept {
     vec2<T> c;
-    c.x = lhs.x + rhs;
-    c.y = lhs.y + rhs;
+    c.x = a.x + b;
+    c.y = a.y + b;
     return c;
 }
 
 /* Add a scalar and a vec2. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec2<T> operator+
-(const U& lhs, const vec2<T>& rhs) noexcept {
+(const U& a, const vec2<T>& b) noexcept {
     vec2<T> c;
-    c.x = lhs + rhs.x;
-    c.y = lhs + rhs.y;
+    c.x = a + b.x;
+    c.y = a + b.y;
     return c;
 }
 
 /* Plus-equals operand with two vec2s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec2<T>& operator+=
-(vec2<T>& lhs, const vec2<T>& rhs) noexcept {
-    lhs.x += rhs.x;
-    lhs.y += rhs.y;
-    return lhs;
+(vec2<T>& a, const vec2<T>& b) noexcept {
+    a.x += b.x;
+    a.y += b.y;
+    return a;
 }
 
 /* Plus-equals operand with vec2 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec2<T>& operator+=
-(vec2<T>& lhs, const U& rhs) noexcept {
-    lhs.x += rhs;
-    lhs.y += rhs;
-    return lhs;
+(vec2<T>& a, const U& b) noexcept {
+    a.x += b;
+    a.y += b;
+    return a;
 }
 
 /* Make a vec2 negative. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec2<T> operator-
-(const vec2<T>& rhs) noexcept {
+(const vec2<T>& b) noexcept {
     vec2<T> c;
-    c.x = -rhs.x;
-    c.y = -rhs.y;
+    c.x = -b.x;
+    c.y = -b.y;
     return c;
 }
 
 /* Subtract two vec2s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec2<T> operator-
-(const vec2<T>& lhs, const vec2<T>& rhs) noexcept {
+(const vec2<T>& a, const vec2<T>& b) noexcept {
     vec2<T> c;
-    c.x = lhs.x - rhs.x;
-    c.y = lhs.y - rhs.y;
+    c.x = a.x - b.x;
+    c.y = a.y - b.y;
     return c;
 }
 
 /* Subtract a scalar from a vec2. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec2<T> operator-
-(const vec2<T>& lhs, const U& rhs) noexcept {
+(const vec2<T>& a, const U& b) noexcept {
     vec2<T> c;
-    c.x = lhs.x - rhs;
-    c.y = lhs.y - rhs;
+    c.x = a.x - b;
+    c.y = a.y - b;
     return c;
 }
 
 /* Subtract a scalar from a vec2. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec2<T> operator-
-(const U& lhs, const vec2<T>& rhs) noexcept {
+(const U& a, const vec2<T>& b) noexcept {
     vec2<T> c;
-    c.x = lhs - rhs.x;
-    c.y = lhs - rhs.y;
+    c.x = a - b.x;
+    c.y = a - b.y;
     return c;
 }
 
 /* Minus-equals operand with two vec2s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec2<T>& operator-=
-(vec2<T>& lhs, const vec2<T>& rhs) noexcept {
-    lhs.x -= rhs.x;
-    lhs.y -= rhs.y;
-    return lhs;
+(vec2<T>& a, const vec2<T>& b) noexcept {
+    a.x -= b.x;
+    a.y -= b.y;
+    return a;
 }
 
 /* Minus-equals operand with vec2 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec2<T>& operator-=
-(vec2<T>& lhs, const U& rhs) noexcept {
-    lhs.x -= rhs;
-    lhs.y -= rhs;
-    return lhs;
+(vec2<T>& a, const U& b) noexcept {
+    a.x -= b;
+    a.y -= b;
+    return a;
 }
 
 /* Multiply two vec2s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec2<T> operator*
-(const vec2<T>& lhs, const vec2<T>& rhs) noexcept {
+(const vec2<T>& a, const vec2<T>& b) noexcept {
     vec2<T> c;
-    c.x = rhs.x * lhs.x;
-    c.y = rhs.y * lhs.y;
+    c.x = b.x * a.x;
+    c.y = b.y * a.y;
     return c;
 }
 
 /* Multiply a scalar and vec2. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec2<T> operator*
-(const U& lhs, const vec2<T>& rhs) noexcept {
+(const U& a, const vec2<T>& b) noexcept {
     vec2<T> c;
-    c.x = rhs.x * lhs;
-    c.y = rhs.y * lhs;
+    c.x = b.x * a;
+    c.y = b.y * a;
     return c;
 }
 
 /* Multiply a vec2 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec2<T> operator*
-(const vec2<T>& lhs, const U& rhs) noexcept {
-    return rhs * lhs;
+(const vec2<T>& a, const U& b) noexcept {
+    return b * a;
 }
 
 /* Multiply-equals operand with two vec2s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec2<T>& operator*=
-(vec2<T>& lhs, const vec2<T>& rhs) noexcept {
-    lhs.x *= rhs.x;
-    lhs.y *= rhs.y;
-    return lhs;
+(vec2<T>& a, const vec2<T>& b) noexcept {
+    a.x *= b.x;
+    a.y *= b.y;
+    return a;
 }
 
 /* Multiply-equals operand with a vec2 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec2<T>& operator*=
-(vec2<T>& lhs, const U& rhs) noexcept {
-    lhs.x *= rhs;
-    lhs.y *= rhs;
-    return lhs;
+(vec2<T>& a, const U& b) noexcept {
+    a.x *= b;
+    a.y *= b;
+    return a;
 }
 
 /* Divide a vec2 by a vec2. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec2<T> operator/
-(const vec2<T>& lhs, const vec2<T>& rhs) noexcept {
+(const vec2<T>& a, const vec2<T>& b) noexcept {
     vec2<T> c;
-    c.x = lhs.x / rhs.x;
-    c.y = lhs.y / rhs.y;
+    c.x = a.x / b.x;
+    c.y = a.y / b.y;
     return c;
 }
 
 /* Divide a vec2 by a scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec2<T> operator/
-(const vec2<T>& lhs, const U& rhs) noexcept {
+(const vec2<T>& a, const U& b) noexcept {
     vec2<T> c;
-    c.x = lhs.x / rhs;
-    c.y = lhs.y / rhs;
+    c.x = a.x / b;
+    c.y = a.y / b;
     return c;
 }
 
 /* Divide a scalar by a vec2. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec2<T> operator/
-(const U& lhs, const vec2<T>& rhs) noexcept {
+(const U& a, const vec2<T>& b) noexcept {
     vec2<T> c;
-    c.x = lhs / rhs.x;
-    c.y = lhs / rhs.y;
+    c.x = a / b.x;
+    c.y = a / b.y;
     return c;
 }
 
 /* Divide-equals operand with two vec2s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec2<T>& operator/=
-(vec2<T>& lhs, const vec2<T>& rhs) noexcept {
-    lhs.x /= rhs.x;
-    lhs.y /= rhs.y;
-    return lhs;
+(vec2<T>& a, const vec2<T>& b) noexcept {
+    a.x /= b.x;
+    a.y /= b.y;
+    return a;
 }
 
 /* Divide-equals operand with a vec2 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec2<T>& operator/=
-(vec2<T>& lhs, const U& rhs) {
-    lhs.x /= rhs;
-    lhs.y /= rhs;
-    return lhs;
+(vec2<T>& a, const U& b) {
+    a.x /= b;
+    a.y /= b;
+    return a;
 }
 
 /* Pre-increment operand. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec2<T>& operator++
-(vec2<T>& rhs) noexcept {
-    ++rhs.x;
-    ++rhs.y;
-    return rhs;
+(vec2<T>& b) noexcept {
+    ++b.x;
+    ++b.y;
+    return b;
 }
 
 /* Post-increment operand. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec2<T> operator++
-(vec2<T>& lhs, i32) noexcept {
-    vec2<T> c = lhs;
-    lhs.x++;
-    lhs.y++;
+(vec2<T>& a, i32) noexcept {
+    vec2<T> c = a;
+    a.x++;
+    a.y++;
     return c;
 }
 
 /* Pre-decrement operand. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec2<T>& operator--
-(vec2<T>& rhs) noexcept {
-    --rhs.x;
-    --rhs.y;
-    return rhs;
+(vec2<T>& b) noexcept {
+    --b.x;
+    --b.y;
+    return b;
 }
 
 /* Post-decrement operand. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec2<T> operator--
-(vec2<T>& lhs, i32) noexcept {
-    vec2<T> c = lhs;
-    lhs.x--;
-    lhs.y--;
+(vec2<T>& a, i32) noexcept {
+    vec2<T> c = a;
+    a.x--;
+    a.y--;
     return c;
 }
 
 /* Check for equality between two vec2s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr bool operator==
-(const vec2<T>& lhs, const vec2<T>& rhs) noexcept {
-    return (lhs.x == rhs.x) && 
-           (lhs.y == rhs.y);
+(const vec2<T>& a, const vec2<T>& b) noexcept {
+    return (a.x == b.x) && 
+           (a.y == b.y);
 }
 
 /* Check for non-equality between two vec2s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr bool operator!=
-(const vec2<T>& lhs, const vec2<T>& rhs) noexcept {
-    return (lhs.x != rhs.x) || 
-           (lhs.y != rhs.y);
+(const vec2<T>& a, const vec2<T>& b) noexcept {
+    return (a.x != b.x) || 
+           (a.y != b.y);
 }
 
 /* Write the coordinates of a vec2 to stdout. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr std::ostream& operator<<
-(std::ostream& os, const vec2<T>& rhs) noexcept {
-    os << "(" << rhs.x << "," 
-              << rhs.y << ")";
+(std::ostream& os, const vec2<T>& b) noexcept {
+    os << "(" << b.x << "," 
+              << b.y << ")";
     return os;
 }
 
 /*----------------*/
 /* Vec2 Functions */
 /*----------------*/
+
+/* Returns the smaller of two vec2s. */
+template<typename T>
+[[nodiscard]] sf_inline constexpr vec2<T>
+min(const vec2<T>& a, const vec2<T>& b) {
+    vec2<T> c;
+    c.x = std::min(a.x, b.x);
+    c.y = std::min(a.y, b.y);
+    return c;
+}
+
+/* Returns the larger of two vec2s. */
+template<typename T>
+[[nodiscard]] sf_inline constexpr vec2<T>
+max(const vec2<T>& a, const vec2<T>& b) {
+    vec2<T> c;
+    c.x = std::max(a.x, b.x);
+    c.y = std::max(a.y, b.y);
+    return c;
+}
 
 /* Returns the length (magnitude) of a 2D vector. */
 template<typename T>
@@ -773,11 +787,11 @@ public:
     /* Class Definition */
     union {
         /* Coordinate Form */
-        struct sf_align(4 * sizeof(T)) {
+        struct {
             T x, y, z;
         };
         /* Array Form */
-        struct sf_align(4 * sizeof(T)) {
+        struct {
             T v[3];
         };
     };
@@ -856,295 +870,317 @@ public:
 /* Add two vec3s. */
 template<typename T> 
 [[nodiscard]] sf_inline constexpr vec3<T> operator+
-(const vec3<T>& lhs, const vec3<T>& rhs) noexcept {
+(const vec3<T>& a, const vec3<T>& b) noexcept {
     vec3<T> c;
-    c.x = lhs.x + rhs.x;
-    c.y = lhs.y + rhs.y;
-    c.z = lhs.z + rhs.z;
+    c.x = a.x + b.x;
+    c.y = a.y + b.y;
+    c.z = a.z + b.z;
     return c;
 }
 
 /* Add a vec3 and a scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec3<T> operator+
-(const vec3<T>& lhs, const U& rhs) noexcept {
+(const vec3<T>& a, const U& b) noexcept {
     vec3<T> c;
-    c.x = lhs.x + rhs;
-    c.y = lhs.y + rhs;
-    c.z = lhs.z + rhs;
+    c.x = a.x + b;
+    c.y = a.y + b;
+    c.z = a.z + b;
     return c;
 }
 
 /* Add a scalar and a vec3. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec3<T> operator+
-(const U& lhs, const vec3<T>& rhs) noexcept {
+(const U& a, const vec3<T>& b) noexcept {
     vec3<T> c;
-    c.x = lhs + rhs.x;
-    c.y = lhs + rhs.y;
-    c.z = lhs + rhs.z;
+    c.x = a + b.x;
+    c.y = a + b.y;
+    c.z = a + b.z;
     return c;
 }
 
 /* Plus-equals operand with two vec3s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T>& operator+=
-(vec3<T>& lhs, const vec3<T>& rhs) noexcept {
-    lhs.x += rhs.x;
-    lhs.y += rhs.y;
-    lhs.z += rhs.z;
-    return lhs;
+(vec3<T>& a, const vec3<T>& b) noexcept {
+    a.x += b.x;
+    a.y += b.y;
+    a.z += b.z;
+    return a;
 }
 
 /* Plus-equals operand with vec3 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec3<T>& operator+=
-(vec3<T>& lhs, const U& rhs) noexcept {
-    lhs.x += rhs;
-    lhs.y += rhs;
-    lhs.z += rhs;
-    return lhs;
+(vec3<T>& a, const U& b) noexcept {
+    a.x += b;
+    a.y += b;
+    a.z += b;
+    return a;
 }
 
 /* Make a vec3 negative. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T> operator-
-(const vec3<T>& rhs) noexcept {
+(const vec3<T>& b) noexcept {
     vec3<T> c;
-    c.x = -rhs.x;
-    c.y = -rhs.y;
-    c.z = -rhs.z;
+    c.x = -b.x;
+    c.y = -b.y;
+    c.z = -b.z;
     return c;
 }
 
 /* Subtract two vec3s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T> operator-
-(const vec3<T>& lhs, const vec3<T>& rhs) noexcept {
+(const vec3<T>& a, const vec3<T>& b) noexcept {
     vec3<T> c;
-    c.x = lhs.x - rhs.x;
-    c.y = lhs.y - rhs.y;
-    c.z = lhs.z - rhs.z;
+    c.x = a.x - b.x;
+    c.y = a.y - b.y;
+    c.z = a.z - b.z;
     return c;
 }
 
 /* Subtract a scalar from a vec3. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec3<T> operator-
-(const vec3<T>& lhs, const U& rhs) noexcept {
+(const vec3<T>& a, const U& b) noexcept {
     vec3<T> c;
-    c.x = lhs.x - rhs;
-    c.y = lhs.y - rhs;
-    c.z = lhs.z - rhs;
+    c.x = a.x - b;
+    c.y = a.y - b;
+    c.z = a.z - b;
     return c;
 }
 
 /* Subtract a scalar from a vec3. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec3<T> operator-
-(const U& lhs, const vec3<T>& rhs) noexcept {
+(const U& a, const vec3<T>& b) noexcept {
     vec3<T> c;
-    c.x = lhs - rhs.x;
-    c.y = lhs - rhs.y;
-    c.z = lhs - rhs.z;
+    c.x = a - b.x;
+    c.y = a - b.y;
+    c.z = a - b.z;
     return c;
 }
 
 /* Minus-equals operand with two vec3s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T>& operator-=
-(vec3<T>& lhs, const vec3<T>& rhs) noexcept {
-    lhs.x -= rhs.x;
-    lhs.y -= rhs.y;
-    lhs.z -= rhs.z;
-    return lhs;
+(vec3<T>& a, const vec3<T>& b) noexcept {
+    a.x -= b.x;
+    a.y -= b.y;
+    a.z -= b.z;
+    return a;
 }
 
 /* Minus-equals operand with vec3 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec3<T>& operator-=
-(vec3<T>& lhs, const U& rhs) noexcept {
-    lhs.x -= rhs;
-    lhs.y -= rhs;
-    lhs.z -= rhs;
-    return lhs;
+(vec3<T>& a, const U& b) noexcept {
+    a.x -= b;
+    a.y -= b;
+    a.z -= b;
+    return a;
 }
 
 /* Multiply two vec3s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T> operator*
-(const vec3<T>& lhs, const vec3<T>& rhs) noexcept {
+(const vec3<T>& a, const vec3<T>& b) noexcept {
     vec3<T> c;
-    c.x = rhs.x * lhs.x;
-    c.y = rhs.y * lhs.y;
-    c.z = rhs.z * lhs.z;
+    c.x = b.x * a.x;
+    c.y = b.y * a.y;
+    c.z = b.z * a.z;
     return c;
 }
 
 /* Multiply a scalar and vec3. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec3<T> operator*
-(const U& lhs, const vec3<T>& rhs) noexcept {
+(const U& a, const vec3<T>& b) noexcept {
     vec3<T> c;
-    c.x = rhs.x * lhs;
-    c.y = rhs.y * lhs;
-    c.z = rhs.z * lhs;
+    c.x = b.x * a;
+    c.y = b.y * a;
+    c.z = b.z * a;
     return c;
 }
 
 /* Multiply a vec3 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec3<T> operator*
-(const vec3<T>& lhs, const U& rhs) noexcept {
-    return rhs * lhs;
+(const vec3<T>& a, const U& b) noexcept {
+    return b * a;
 }
 
 /* Multiply-equals operand with two vec3s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T>& operator*=
-(vec3<T>& lhs, const vec3<T>& rhs) noexcept {
-    lhs.x *= rhs.x;
-    lhs.y *= rhs.y;
-    lhs.z *= rhs.z;
-    return lhs;
+(vec3<T>& a, const vec3<T>& b) noexcept {
+    a.x *= b.x;
+    a.y *= b.y;
+    a.z *= b.z;
+    return a;
 }
 
 /* Multiply-equals operand with a vec3 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec3<T>& operator*=
-(vec3<T>& lhs, const U& rhs) noexcept {
-    lhs.x *= rhs;
-    lhs.y *= rhs;
-    lhs.z *= rhs;
-    return lhs;
+(vec3<T>& a, const U& b) noexcept {
+    a.x *= b;
+    a.y *= b;
+    a.z *= b;
+    return a;
 }
 
 /* Divide a vec3 by a vec3. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T> operator/
-(const vec3<T>& lhs, const vec3<T>& rhs) noexcept {
+(const vec3<T>& a, const vec3<T>& b) noexcept {
     vec3<T> c;
-    c.x = lhs.x / rhs.x;
-    c.y = lhs.y / rhs.y;
-    c.z = lhs.z / rhs.z;
+    c.x = a.x / b.x;
+    c.y = a.y / b.y;
+    c.z = a.z / b.z;
     return c;
 }
 
 /* Divide a vec3 by a scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec3<T> operator/
-(const vec3<T>& lhs, const U& rhs) noexcept {
+(const vec3<T>& a, const U& b) noexcept {
     vec3<T> c;
-    c.x = lhs.x / rhs;
-    c.y = lhs.y / rhs;
-    c.z = lhs.z / rhs;
+    c.x = a.x / b;
+    c.y = a.y / b;
+    c.z = a.z / b;
     return c;
 }
 
 /* Divide a scalar by a vec3. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec3<T> operator/
-(const U& lhs, const vec3<T>& rhs) noexcept {
+(const U& a, const vec3<T>& b) noexcept {
     vec3<T> c;
-    c.x = lhs / rhs.x;
-    c.y = lhs / rhs.y;
-    c.z = lhs / rhs.z;
+    c.x = a / b.x;
+    c.y = a / b.y;
+    c.z = a / b.z;
     return c;
 }
 
 /* Divide-equals operand with two vec3s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T>& operator/=
-(vec3<T>& lhs, const vec3<T>& rhs) noexcept {
-    lhs.x /= rhs.x;
-    lhs.y /= rhs.y;
-    lhs.z /= rhs.z;
-    return lhs;
+(vec3<T>& a, const vec3<T>& b) noexcept {
+    a.x /= b.x;
+    a.y /= b.y;
+    a.z /= b.z;
+    return a;
 }
 
 /* Divide-equals operand with a vec3 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec3<T>& operator/=
-(vec3<T>& lhs, const U& rhs) {
-    lhs.x /= rhs;
-    lhs.y /= rhs;
-    lhs.z /= rhs;
-    return lhs;
+(vec3<T>& a, const U& b) {
+    a.x /= b;
+    a.y /= b;
+    a.z /= b;
+    return a;
 }
 
 /* Pre-increment operand. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T>& operator++
-(vec3<T>& rhs) noexcept {
-    ++rhs.x;
-    ++rhs.y;
-    ++rhs.z;
-    return rhs;
+(vec3<T>& b) noexcept {
+    ++b.x;
+    ++b.y;
+    ++b.z;
+    return b;
 }
 
 /* Post-increment operand. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T> operator++
-(vec3<T>& lhs, i32) noexcept {
-    vec3<T> c = lhs;
-    lhs.x++;
-    lhs.y++;
-    lhs.z++;
+(vec3<T>& a, i32) noexcept {
+    vec3<T> c = a;
+    a.x++;
+    a.y++;
+    a.z++;
     return c;
 }
 
 /* Pre-decrement operand. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T>& operator--
-(vec3<T>& rhs) noexcept {
-    --rhs.x;
-    --rhs.y;
-    --rhs.z;
-    return rhs;
+(vec3<T>& b) noexcept {
+    --b.x;
+    --b.y;
+    --b.z;
+    return b;
 }
 
 /* Post-decrement operand. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T> operator--
-(vec3<T>& lhs, i32) noexcept {
-    vec3<T> c = lhs;
-    lhs.x--;
-    lhs.y--;
-    lhs.z--;
+(vec3<T>& a, i32) noexcept {
+    vec3<T> c = a;
+    a.x--;
+    a.y--;
+    a.z--;
     return c;
 }
 
 /* Check for equality between two vec3s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr bool operator==
-(const vec3<T>& lhs, const vec3<T>& rhs) noexcept {
-    return (lhs.x == rhs.x) && 
-           (lhs.y == rhs.y) &&
-           (lhs.z == rhs.z);
+(const vec3<T>& a, const vec3<T>& b) noexcept {
+    return (a.x == b.x) && 
+           (a.y == b.y) &&
+           (a.z == b.z);
 }
 
 /* Check for non-equality between two vec3s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr bool operator!=
-(const vec3<T>& lhs, const vec3<T>& rhs) noexcept {
-    return (lhs.x != rhs.x) || 
-           (lhs.y != rhs.y) ||
-           (lhs.z != rhs.z);
+(const vec3<T>& a, const vec3<T>& b) noexcept {
+    return (a.x != b.x) || 
+           (a.y != b.y) ||
+           (a.z != b.z);
 }
 
 /* Write the coordinates of a vec3 to stdout. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr std::ostream& operator<<
-(std::ostream& os, const vec3<T>& rhs) noexcept {
-    os << "(" << rhs.x << "," 
-              << rhs.y << ","
-              << rhs.z << ")";
+(std::ostream& os, const vec3<T>& b) noexcept {
+    os << "(" << b.x << "," 
+              << b.y << ","
+              << b.z << ")";
     return os;
 }
 
 /*---------------------*/
 /* 3D Vector Functions */
 /*---------------------*/
+
+/* Returns the smaller of two vec3s. */
+template<typename T>
+[[nodiscard]] sf_inline constexpr vec3<T>
+min(const vec3<T>& a, const vec3<T>& b) {
+    vec3<T> c;
+    c.x = std::min(a.x, b.x);
+    c.y = std::min(a.y, b.y);
+    c.z = std::min(a.z, b.z);
+    return c;
+}
+
+/* Returns the larger of two vec3s. */
+template<typename T>
+[[nodiscard]] sf_inline constexpr vec3<T>
+max(const vec3<T>& a, const vec3<T>& b) {
+    vec3<T> c;
+    c.x = std::max(a.x, b.x);
+    c.y = std::max(a.y, b.y);
+    c.z = std::max(a.z, b.z);
+    return c;
+}
 
 /* Returns the length (magnitude) of a 3D vector. */
 template<typename T>
@@ -1163,7 +1199,7 @@ normalize(vec3<T>& a) noexcept {
     if (mag != 0.0) {
         return a /= mag;
     }
-    return vec3(0.0, 0.0, 0.0);
+    return vec3<T>(0.0, 0.0, 0.0);
 }
 
 /* Returns the dot product of a 3D vector. */
@@ -1233,11 +1269,11 @@ public:
     /* Class Definition */
     union {
         /* Coordinate Form */
-        struct sf_align(4 * sizeof(T)) {
+        struct {
             T x, y, z, w;
         };
         /* Array Form */
-        struct sf_align(4 * sizeof(T)) {
+        struct {
             T v[4];
         };
     };
@@ -1322,322 +1358,346 @@ public:
 /* Add two vec4s. */
 template<typename T> 
 [[nodiscard]] sf_inline constexpr vec4<T> operator+
-(const vec4<T>& lhs, const vec4<T>& rhs) noexcept {
+(const vec4<T>& a, const vec4<T>& b) noexcept {
     vec4<T> c;
-    c.x = lhs.x + rhs.x;
-    c.y = lhs.y + rhs.y;
-    c.z = lhs.z + rhs.z;
-    c.w = lhs.w + rhs.w;
+    c.x = a.x + b.x;
+    c.y = a.y + b.y;
+    c.z = a.z + b.z;
+    c.w = a.w + b.w;
     return c;
 }
 
 /* Add a vec4 and a scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec4<T> operator+
-(const vec4<T>& lhs, const U& rhs) noexcept {
+(const vec4<T>& a, const U& b) noexcept {
     vec4<T> c;
-    c.x = lhs.x + rhs;
-    c.y = lhs.y + rhs;
-    c.z = lhs.z + rhs;
-    c.w = lhs.w + rhs;
+    c.x = a.x + b;
+    c.y = a.y + b;
+    c.z = a.z + b;
+    c.w = a.w + b;
     return c;
 }
 
 /* Add a scalar and a vec4. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec4<T> operator+
-(const U& lhs, const vec4<T>& rhs) noexcept {
+(const U& a, const vec4<T>& b) noexcept {
     vec4<T> c;
-    c.x = lhs + rhs.x;
-    c.y = lhs + rhs.y;
-    c.z = lhs + rhs.z;
-    c.w = lhs + rhs.w;
+    c.x = a + b.x;
+    c.y = a + b.y;
+    c.z = a + b.z;
+    c.w = a + b.w;
     return c;
 }
 
 /* Plus-equals operand with two vec4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec4<T>& operator+=
-(vec4<T>& lhs, const vec4<T>& rhs) noexcept {
-    lhs.x += rhs.x;
-    lhs.y += rhs.y;
-    lhs.z += rhs.z;
-    lhs.w += rhs.w;
-    return lhs;
+(vec4<T>& a, const vec4<T>& b) noexcept {
+    a.x += b.x;
+    a.y += b.y;
+    a.z += b.z;
+    a.w += b.w;
+    return a;
 }
 
 /* Plus-equals operand with vec4 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec4<T>& operator+=
-(vec4<T>& lhs, const U& rhs) noexcept {
-    lhs.x += rhs;
-    lhs.y += rhs;
-    lhs.z += rhs;
-    lhs.w += rhs;
-    return lhs;
+(vec4<T>& a, const U& b) noexcept {
+    a.x += b;
+    a.y += b;
+    a.z += b;
+    a.w += b;
+    return a;
 }
 
 /* Make a vec4 negative. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec4<T> operator-
-(const vec4<T>& rhs) noexcept {
+(const vec4<T>& b) noexcept {
     vec4<T> c;
-    c.x = -rhs.x;
-    c.y = -rhs.y;
-    c.z = -rhs.z;
-    c.w = -rhs.w;
+    c.x = -b.x;
+    c.y = -b.y;
+    c.z = -b.z;
+    c.w = -b.w;
     return c;
 }
 
 /* Subtract two vec4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec4<T> operator-
-(const vec4<T>& lhs, const vec4<T>& rhs) noexcept {
+(const vec4<T>& a, const vec4<T>& b) noexcept {
     vec4<T> c;
-    c.x = lhs.x - rhs.x;
-    c.y = lhs.y - rhs.y;
-    c.z = lhs.z - rhs.z;
-    c.w = lhs.w - rhs.w;
+    c.x = a.x - b.x;
+    c.y = a.y - b.y;
+    c.z = a.z - b.z;
+    c.w = a.w - b.w;
     return c;
 }
 
 /* Subtract a scalar from a vec4. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec4<T> operator-
-(const vec4<T>& lhs, const U& rhs) noexcept {
+(const vec4<T>& a, const U& b) noexcept {
     vec4<T> c;
-    c.x = lhs.x - rhs;
-    c.y = lhs.y - rhs;
-    c.z = lhs.z - rhs;
-    c.w = lhs.w - rhs;
+    c.x = a.x - b;
+    c.y = a.y - b;
+    c.z = a.z - b;
+    c.w = a.w - b;
     return c;
 }
 
 /* Subtract a scalar from a vec4. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec4<T> operator-
-(const U& lhs, const vec4<T>& rhs) noexcept {
+(const U& a, const vec4<T>& b) noexcept {
     vec4<T> c;
-    c.x = lhs - rhs.x;
-    c.y = lhs - rhs.y;
-    c.z = lhs - rhs.z;
-    c.w = lhs - rhs.w;
+    c.x = a - b.x;
+    c.y = a - b.y;
+    c.z = a - b.z;
+    c.w = a - b.w;
     return c;
 }
 
 /* Minus-equals operand with two vec4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec4<T>& operator-=
-(vec4<T>& lhs, const vec4<T>& rhs) noexcept {
-    lhs.x -= rhs.x;
-    lhs.y -= rhs.y;
-    lhs.z -= rhs.z;
-    lhs.w -= rhs.w;
-    return lhs;
+(vec4<T>& a, const vec4<T>& b) noexcept {
+    a.x -= b.x;
+    a.y -= b.y;
+    a.z -= b.z;
+    a.w -= b.w;
+    return a;
 }
 
 /* Minus-equals operand with vec4 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec4<T>& operator-=
-(vec4<T>& lhs, const U& rhs) noexcept {
-    lhs.x -= rhs;
-    lhs.y -= rhs;
-    lhs.z -= rhs;
-    lhs.w -= rhs;
-    return lhs;
+(vec4<T>& a, const U& b) noexcept {
+    a.x -= b;
+    a.y -= b;
+    a.z -= b;
+    a.w -= b;
+    return a;
 }
 
 /* Multiply two vec4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec4<T> operator*
-(const vec4<T>& lhs, const vec4<T>& rhs) noexcept {
+(const vec4<T>& a, const vec4<T>& b) noexcept {
     vec4<T> c;
-    c.x = rhs.x * lhs.x;
-    c.y = rhs.y * lhs.y;
-    c.z = rhs.z * lhs.z;
-    c.w = rhs.w * lhs.w;
+    c.x = b.x * a.x;
+    c.y = b.y * a.y;
+    c.z = b.z * a.z;
+    c.w = b.w * a.w;
     return c;
 }
 
 /* Multiply a scalar and vec4. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec4<T> operator*
-(const U& lhs, const vec4<T>& rhs) noexcept {
+(const U& a, const vec4<T>& b) noexcept {
     vec4<T> c;
-    c.x = rhs.x * lhs;
-    c.y = rhs.y * lhs;
-    c.z = rhs.z * lhs;
-    c.w = rhs.w * lhs;
+    c.x = b.x * a;
+    c.y = b.y * a;
+    c.z = b.z * a;
+    c.w = b.w * a;
     return c;
 }
 
 /* Multiply a vec4 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec4<T> operator*
-(const vec4<T>& lhs, const U& rhs) noexcept {
-    return rhs * lhs;
+(const vec4<T>& a, const U& b) noexcept {
+    return b * a;
 }
 
 /* Multiply-equals operand with two vec4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec4<T>& operator*=
-(vec4<T>& lhs, const vec4<T>& rhs) noexcept {
-    lhs.x *= rhs.x;
-    lhs.y *= rhs.y;
-    lhs.z *= rhs.z;
-    lhs.w *= rhs.w;
-    return lhs;
+(vec4<T>& a, const vec4<T>& b) noexcept {
+    a.x *= b.x;
+    a.y *= b.y;
+    a.z *= b.z;
+    a.w *= b.w;
+    return a;
 }
 
 /* Multiply-equals operand with a vec4 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec4<T>& operator*=
-(vec4<T>& lhs, const U& rhs) noexcept {
-    lhs.x *= rhs;
-    lhs.y *= rhs;
-    lhs.z *= rhs;
-    lhs.w *= rhs;
-    return lhs;
+(vec4<T>& a, const U& b) noexcept {
+    a.x *= b;
+    a.y *= b;
+    a.z *= b;
+    a.w *= b;
+    return a;
 }
 
 /* Divide a vec4 by a vec4. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec4<T> operator/
-(const vec4<T>& lhs, const vec4<T>& rhs) noexcept {
+(const vec4<T>& a, const vec4<T>& b) noexcept {
     vec4<T> c;
-    c.x = lhs.x / rhs.x;
-    c.y = lhs.y / rhs.y;
-    c.z = lhs.z / rhs.z;
-    c.w = lhs.w / rhs.w;
+    c.x = a.x / b.x;
+    c.y = a.y / b.y;
+    c.z = a.z / b.z;
+    c.w = a.w / b.w;
     return c;
 }
 
 /* Divide a vec4 by a scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec4<T> operator/
-(const vec4<T>& lhs, const U& rhs) noexcept {
+(const vec4<T>& a, const U& b) noexcept {
     vec4<T> c;
-    c.x = lhs.x / rhs;
-    c.y = lhs.y / rhs;
-    c.z = lhs.z / rhs;
-    c.w = lhs.w / rhs;
+    c.x = a.x / b;
+    c.y = a.y / b;
+    c.z = a.z / b;
+    c.w = a.w / b;
     return c;
 }
 
 /* Divide a scalar by a vec4. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec4<T> operator/
-(const U& lhs, const vec4<T>& rhs) noexcept {
+(const U& a, const vec4<T>& b) noexcept {
     vec4<T> c;
-    c.x = lhs / rhs.x;
-    c.y = lhs / rhs.y;
-    c.z = lhs / rhs.z;
-    c.w = lhs / rhs.w;
+    c.x = a / b.x;
+    c.y = a / b.y;
+    c.z = a / b.z;
+    c.w = a / b.w;
     return c;
 }
 
 /* Divide-equals operand with two vec4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec4<T>& operator/=
-(vec4<T>& lhs, const vec4<T>& rhs) noexcept {
-    lhs.x /= rhs.x;
-    lhs.y /= rhs.y;
-    lhs.z /= rhs.z;
-    lhs.w /= rhs.w;
-    return lhs;
+(vec4<T>& a, const vec4<T>& b) noexcept {
+    a.x /= b.x;
+    a.y /= b.y;
+    a.z /= b.z;
+    a.w /= b.w;
+    return a;
 }
 
 /* Divide-equals operand with a vec4 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr vec4<T>& operator/=
-(vec4<T>& lhs, const U& rhs) {
-    lhs.x /= rhs;
-    lhs.y /= rhs;
-    lhs.z /= rhs;
-    lhs.w /= rhs;
-    return lhs;
+(vec4<T>& a, const U& b) {
+    a.x /= b;
+    a.y /= b;
+    a.z /= b;
+    a.w /= b;
+    return a;
 }
 
 /* Pre-increment operand. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec4<T>& operator++
-(vec4<T>& rhs) noexcept {
-    ++rhs.x;
-    ++rhs.y;
-    ++rhs.z;
-    ++rhs.w;
-    return rhs;
+(vec4<T>& b) noexcept {
+    ++b.x;
+    ++b.y;
+    ++b.z;
+    ++b.w;
+    return b;
 }
 
 /* Post-increment operand. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec4<T> operator++
-(vec4<T>& lhs, i32) noexcept {
-    vec4<T> c = lhs;
-    lhs.x++;
-    lhs.y++;
-    lhs.z++;
-    lhs.w++;
+(vec4<T>& a, i32) noexcept {
+    vec4<T> c = a;
+    a.x++;
+    a.y++;
+    a.z++;
+    a.w++;
     return c;
 }
 
 /* Pre-decrement operand. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec4<T>& operator--
-(vec4<T>& rhs) noexcept {
-    --rhs.x;
-    --rhs.y;
-    --rhs.z;
-    --rhs.w;
-    return rhs;
+(vec4<T>& b) noexcept {
+    --b.x;
+    --b.y;
+    --b.z;
+    --b.w;
+    return b;
 }
 
 /* Post-decrement operand. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec4<T> operator--
-(vec4<T>& lhs, i32) noexcept {
-    vec4<T> c = lhs;
-    lhs.x--;
-    lhs.y--;
-    lhs.z--;
-    lhs.w--;
+(vec4<T>& a, i32) noexcept {
+    vec4<T> c = a;
+    a.x--;
+    a.y--;
+    a.z--;
+    a.w--;
     return c;
 }
 
 /* Check for equality between two vec4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr bool operator==
-(const vec4<T>& lhs, const vec4<T>& rhs) noexcept {
-    return (lhs.x == rhs.x) && 
-           (lhs.y == rhs.y) &&
-           (lhs.z == rhs.z) &&
-           (lhs.w == rhs.w);
+(const vec4<T>& a, const vec4<T>& b) noexcept {
+    return (a.x == b.x) && 
+           (a.y == b.y) &&
+           (a.z == b.z) &&
+           (a.w == b.w);
 }
 
 /* Check for non-equality between two vec4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr bool operator!=
-(const vec4<T>& lhs, const vec4<T>& rhs) noexcept {
-    return (lhs.x != rhs.x) || 
-           (lhs.y != rhs.y) ||
-           (lhs.z != rhs.z) ||
-           (lhs.w != rhs.w);
+(const vec4<T>& a, const vec4<T>& b) noexcept {
+    return (a.x != b.x) || 
+           (a.y != b.y) ||
+           (a.z != b.z) ||
+           (a.w != b.w);
 }
 
 /* Write the coordinates of a vec4 to stdout. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr std::ostream& operator<<
-(std::ostream& os, const vec4<T>& rhs) noexcept {
-    os << "(" << rhs.x << "," 
-              << rhs.y << ","
-              << rhs.z << ","
-              << rhs.w << ")";
+(std::ostream& os, const vec4<T>& b) noexcept {
+    os << "(" << b.x << "," 
+              << b.y << ","
+              << b.z << ","
+              << b.w << ")";
     return os;
 }
 
 /*---------------------*/
 /* 4D Vector Functions */
 /*---------------------*/
+
+/* Returns the smaller of two vec4s. */
+template<typename T>
+[[nodiscard]] sf_inline constexpr vec4<T>
+min(const vec4<T>& a, const vec4<T>& b) {
+    vec4<T> c;
+    c.x = std::min(a.x, b.x);
+    c.y = std::min(a.y, b.y);
+    c.z = std::min(a.z, b.z);
+    c.w = std::min(a.w, b.w);
+    return c;
+}
+
+/* Returns the larger of two vec4s. */
+template<typename T>
+[[nodiscard]] sf_inline constexpr vec4<T>
+max(const vec4<T>& a, const vec4<T>& b) {
+    vec4<T> c;
+    c.x = std::max(a.x, b.x);
+    c.y = std::max(a.y, b.y);
+    c.z = std::max(a.z, b.z);
+    c.w = std::max(a.w, b.w);
+    return c;
+}
 
 /* Returns the length (magnitude) of a 4D vector. */
 template<typename T>
@@ -1656,7 +1716,7 @@ normalize(vec4<T>& a) noexcept {
     if (mag != 0.0) {
         return a /= mag;
     }
-    return vec4(0.0, 0.0, 0.0, 0.0);
+    return vec4<T>(0.0, 0.0, 0.0, 0.0);
 }
 
 /* Returns the dot product of a 4D vector. */
@@ -1727,7 +1787,7 @@ template<typename T>
 class mat4 {
    public:
     union {
-        struct sf_align(8 * sizeof(T)) {
+        struct {
             T m[4][4];
         };
     };
@@ -1856,321 +1916,333 @@ class mat4 {
 /* Adds two mat4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr mat4<T> operator+
-(const mat4<T>& lhs, const mat4<T>& rhs) noexcept {
+(const mat4<T>& a, const mat4<T>& b) noexcept {
     mat4<T> c;
     /* row 1 */
-    c.m[0][0] = lhs.m[0][0] + rhs.m[0][0]; 
-    c.m[1][0] = lhs.m[1][0] + rhs.m[1][0]; 
-    c.m[2][0] = lhs.m[2][0] + rhs.m[2][0]; 
-    c.m[3][0] = lhs.m[3][0] + rhs.m[3][0];
+    c.m[0][0] = a.m[0][0] + b.m[0][0]; 
+    c.m[1][0] = a.m[1][0] + b.m[1][0]; 
+    c.m[2][0] = a.m[2][0] + b.m[2][0]; 
+    c.m[3][0] = a.m[3][0] + b.m[3][0];
     /* row 2 */
-    c.m[0][1] = lhs.m[0][1] + rhs.m[0][1]; 
-    c.m[1][1] = lhs.m[1][1] + rhs.m[1][1]; 
-    c.m[2][1] = lhs.m[2][1] + rhs.m[2][1]; 
-    c.m[3][1] = lhs.m[3][1] + rhs.m[3][1];
+    c.m[0][1] = a.m[0][1] + b.m[0][1]; 
+    c.m[1][1] = a.m[1][1] + b.m[1][1]; 
+    c.m[2][1] = a.m[2][1] + b.m[2][1]; 
+    c.m[3][1] = a.m[3][1] + b.m[3][1];
     /* row 3 */
-    c.m[0][2] = lhs.m[0][2] + rhs.m[0][2]; 
-    c.m[1][2] = lhs.m[1][2] + rhs.m[1][2]; 
-    c.m[2][2] = lhs.m[2][2] + rhs.m[2][2]; 
-    c.m[3][2] = lhs.m[3][2] + rhs.m[3][2];
+    c.m[0][2] = a.m[0][2] + b.m[0][2]; 
+    c.m[1][2] = a.m[1][2] + b.m[1][2]; 
+    c.m[2][2] = a.m[2][2] + b.m[2][2]; 
+    c.m[3][2] = a.m[3][2] + b.m[3][2];
     /* row 4 */
-    c.m[0][3] = lhs.m[0][3] + rhs.m[0][3]; 
-    c.m[1][3] = lhs.m[1][3] + rhs.m[1][3]; 
-    c.m[2][3] = lhs.m[2][3] + rhs.m[2][3]; 
-    c.m[3][3] = lhs.m[3][3] + rhs.m[3][3];
+    c.m[0][3] = a.m[0][3] + b.m[0][3]; 
+    c.m[1][3] = a.m[1][3] + b.m[1][3]; 
+    c.m[2][3] = a.m[2][3] + b.m[2][3]; 
+    c.m[3][3] = a.m[3][3] + b.m[3][3];
     return c;
 }
 
 /* Plus-equals operand for two mat4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr mat4<T>& operator+=
-(mat4<T>& lhs, const mat4<T>& rhs) noexcept {
-    lhs = lhs + rhs;
-    return lhs;
+(mat4<T>& a, const mat4<T>& b) noexcept {
+    a = a + b;
+    return a;
 }
 
 /* Make mat4 negative. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr mat4<T> operator-
-(const mat4<T>& rhs) noexcept {
+(const mat4<T>& b) noexcept {
     mat4<T> c;
     /* row 1 */
-    c.m[0][0] = -rhs.m[0][0]; 
-    c.m[1][0] = -rhs.m[1][0]; 
-    c.m[2][0] = -rhs.m[2][0]; 
-    c.m[3][0] = -rhs.m[3][0]; 
+    c.m[0][0] = -b.m[0][0]; 
+    c.m[1][0] = -b.m[1][0]; 
+    c.m[2][0] = -b.m[2][0]; 
+    c.m[3][0] = -b.m[3][0]; 
     /* row 2 */    
-    c.m[0][1] = -rhs.m[0][1];   
-    c.m[1][1] = -rhs.m[1][1]; 
-    c.m[2][1] = -rhs.m[2][1];
-    c.m[3][1] = -rhs.m[3][1];
+    c.m[0][1] = -b.m[0][1];   
+    c.m[1][1] = -b.m[1][1]; 
+    c.m[2][1] = -b.m[2][1];
+    c.m[3][1] = -b.m[3][1];
     /* row 3 */
-    c.m[0][2] = -rhs.m[0][2]; 
-    c.m[1][2] = -rhs.m[1][2]; 
-    c.m[2][2] = -rhs.m[2][2]; 
-    c.m[3][2] = -rhs.m[3][2];
+    c.m[0][2] = -b.m[0][2]; 
+    c.m[1][2] = -b.m[1][2]; 
+    c.m[2][2] = -b.m[2][2]; 
+    c.m[3][2] = -b.m[3][2];
     /* row 4 */
-    c.m[0][3] = -rhs.m[0][3]; 
-    c.m[1][3] = -rhs.m[1][3]; 
-    c.m[2][3] = -rhs.m[2][3]; 
-    c.m[3][3] = -rhs.m[3][3];
+    c.m[0][3] = -b.m[0][3]; 
+    c.m[1][3] = -b.m[1][3]; 
+    c.m[2][3] = -b.m[2][3]; 
+    c.m[3][3] = -b.m[3][3];
     return c;
 }
 
 /* Subtract a mat4 from a mat4. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr mat4<T> operator-
-(const mat4<T>& lhs, const mat4<T>& rhs) noexcept {
+(const mat4<T>& a, const mat4<T>& b) noexcept {
     mat4<T> c;
     /* row 1 */
-    c.m[0][0] = lhs.m[0][0] - rhs.m[0][0]; 
-    c.m[1][0] = lhs.m[1][0] - rhs.m[1][0]; 
-    c.m[2][0] = lhs.m[2][0] - rhs.m[2][0]; 
-    c.m[3][0] = lhs.m[3][0] - rhs.m[3][0];
+    c.m[0][0] = a.m[0][0] - b.m[0][0]; 
+    c.m[1][0] = a.m[1][0] - b.m[1][0]; 
+    c.m[2][0] = a.m[2][0] - b.m[2][0]; 
+    c.m[3][0] = a.m[3][0] - b.m[3][0];
     /* row 2 */
-    c.m[0][1] = lhs.m[0][1] - rhs.m[0][1]; 
-    c.m[1][1] = lhs.m[1][1] - rhs.m[1][1]; 
-    c.m[2][1] = lhs.m[2][1] - rhs.m[2][1]; 
-    c.m[3][1] = lhs.m[3][1] - rhs.m[3][1];
+    c.m[0][1] = a.m[0][1] - b.m[0][1]; 
+    c.m[1][1] = a.m[1][1] - b.m[1][1]; 
+    c.m[2][1] = a.m[2][1] - b.m[2][1]; 
+    c.m[3][1] = a.m[3][1] - b.m[3][1];
     /* row 3 */
-    c.m[0][2] = lhs.m[0][2] - rhs.m[0][2]; 
-    c.m[1][2] = lhs.m[1][2] - rhs.m[1][2]; 
-    c.m[2][2] = lhs.m[2][2] - rhs.m[2][2]; 
-    c.m[3][2] = lhs.m[3][2] - rhs.m[3][2];
+    c.m[0][2] = a.m[0][2] - b.m[0][2]; 
+    c.m[1][2] = a.m[1][2] - b.m[1][2]; 
+    c.m[2][2] = a.m[2][2] - b.m[2][2]; 
+    c.m[3][2] = a.m[3][2] - b.m[3][2];
     /* row 4 */
-    c.m[0][3] = lhs.m[0][3] - rhs.m[0][3]; 
-    c.m[1][3] = lhs.m[1][3] - rhs.m[1][3]; 
-    c.m[2][3] = lhs.m[2][3] - rhs.m[2][3]; 
-    c.m[3][3] = lhs.m[3][3] - rhs.m[3][3];
+    c.m[0][3] = a.m[0][3] - b.m[0][3]; 
+    c.m[1][3] = a.m[1][3] - b.m[1][3]; 
+    c.m[2][3] = a.m[2][3] - b.m[2][3]; 
+    c.m[3][3] = a.m[3][3] - b.m[3][3];
     return c;
 }
 
 /* Minus-equals operand for two mat4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr mat4<T>& operator-=
-(mat4<T>& lhs, const mat4<T>& rhs) noexcept {
-    lhs = lhs - rhs;
-    return lhs;
+(mat4<T>& a, const mat4<T>& b) noexcept {
+    a = a - b;
+    return a;
 }
 
 /* Multiply a mat4 with a vec4. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec4<T> operator*
-(const mat4<T>& lhs, const vec4<T>& rhs) noexcept {
+(const mat4<T>& a, const vec4<T>& b) noexcept {
     vec4<T> c;
     /* row 1 */
-    c.v[0] = rhs.v[0] * lhs.m[0][0] + 
-             rhs.v[1] * lhs.m[0][1] + 
-             rhs.v[2] * lhs.m[0][2] + 
-             rhs.v[3] * lhs.m[0][3];
+    c.v[0] = b.v[0] * a.m[0][0] + 
+             b.v[1] * a.m[0][1] + 
+             b.v[2] * a.m[0][2] + 
+             b.v[3] * a.m[0][3];
     /* row 2 */
-    c.v[1] = rhs.v[0] * lhs.m[1][0] + 
-             rhs.v[1] * lhs.m[1][1] + 
-             rhs.v[2] * lhs.m[1][2] + 
-             rhs.v[3] * lhs.m[1][3];
+    c.v[1] = b.v[0] * a.m[1][0] + 
+             b.v[1] * a.m[1][1] + 
+             b.v[2] * a.m[1][2] + 
+             b.v[3] * a.m[1][3];
     /* row 3 */
-    c.v[2] = rhs.v[0] * lhs.m[2][0] + 
-             rhs.v[1] * lhs.m[2][1] + 
-             rhs.v[2] * lhs.m[2][2] + 
-             rhs.v[3] * lhs.m[2][3];
+    c.v[2] = b.v[0] * a.m[2][0] + 
+             b.v[1] * a.m[2][1] + 
+             b.v[2] * a.m[2][2] + 
+             b.v[3] * a.m[2][3];
     /* row 4 */
-    c.v[3] = rhs.v[0] * lhs.m[3][0] + 
-             rhs.v[1] * lhs.m[3][1] + 
-             rhs.v[2] * lhs.m[3][2] + 
-             rhs.v[3] * lhs.m[3][3];
+    c.v[3] = b.v[0] * a.m[3][0] + 
+             b.v[1] * a.m[3][1] + 
+             b.v[2] * a.m[3][2] + 
+             b.v[3] * a.m[3][3];
     return c;
 }
 
 /* Multiply a mat4 with a scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr mat4<T> operator*
-(const mat4<T>& lhs, const U& rhs) noexcept {
+(const mat4<T>& a, const U& b) noexcept {
     mat4<T> c;
     /* row 1 */
-    c.m[0][0] = lhs.m[0][0] * rhs; 
-    c.m[1][0] = lhs.m[1][0] * rhs; 
-    c.m[2][0] = lhs.m[2][0] * rhs; 
-    c.m[3][0] = lhs.m[3][0] * rhs;
+    c.m[0][0] = a.m[0][0] * b; 
+    c.m[1][0] = a.m[1][0] * b; 
+    c.m[2][0] = a.m[2][0] * b; 
+    c.m[3][0] = a.m[3][0] * b;
     /* row 2 */
-    c.m[0][1] = lhs.m[0][1] * rhs; 
-    c.m[1][1] = lhs.m[1][1] * rhs; 
-    c.m[2][1] = lhs.m[2][1] * rhs; 
-    c.m[3][1] = lhs.m[3][1] * rhs;
+    c.m[0][1] = a.m[0][1] * b; 
+    c.m[1][1] = a.m[1][1] * b; 
+    c.m[2][1] = a.m[2][1] * b; 
+    c.m[3][1] = a.m[3][1] * b;
     /* row 3 */
-    c.m[0][2] = lhs.m[0][2] * rhs; 
-    c.m[1][2] = lhs.m[1][2] * rhs; 
-    c.m[2][2] = lhs.m[2][2] * rhs; 
-    c.m[3][2] = lhs.m[3][2] * rhs;
+    c.m[0][2] = a.m[0][2] * b; 
+    c.m[1][2] = a.m[1][2] * b; 
+    c.m[2][2] = a.m[2][2] * b; 
+    c.m[3][2] = a.m[3][2] * b;
     /* row 4 */
-    c.m[0][3] = lhs.m[0][3] * rhs; 
-    c.m[1][3] = lhs.m[1][3] * rhs; 
-    c.m[2][3] = lhs.m[2][3] * rhs; 
-    c.m[3][3] = lhs.m[3][3] * rhs;
+    c.m[0][3] = a.m[0][3] * b; 
+    c.m[1][3] = a.m[1][3] * b; 
+    c.m[2][3] = a.m[2][3] * b; 
+    c.m[3][3] = a.m[3][3] * b;
     return c;
 }
 
 /* Multiply two mat4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr mat4<T> operator*
-(const mat4<T>& lhs, const mat4<T>& rhs) noexcept {
-    mat4<T> c;
-    for (u32 j = 0; j < 4; ++j) {
-        for (u32 i = 0; i < 4; ++i) {
-            c.m[i][j] = rhs.m[0][j] * lhs.m[i][0] + 
-                        rhs.m[1][j] * lhs.m[i][1] +
-                        rhs.m[2][j] * lhs.m[i][2] + 
-                        rhs.m[3][j] * lhs.m[i][3];
-        }
-    }
-    return c;
+(const mat4<T>& a, const mat4<T>& b) noexcept {
+    mat4<T> mul;
+    /*row 1 */
+    mul.m[0][0] = a.m[0][0] * b.m[0][0] + a.m[1][0] * b.m[0][1] + a.m[2][0] * b.m[0][2] + a.m[3][0] * b.m[0][3];
+    mul.m[0][1] = a.m[0][1] * b.m[0][0] + a.m[1][1] * b.m[0][1] + a.m[2][1] * b.m[0][2] + a.m[3][1] * b.m[0][3];
+    mul.m[0][2] = a.m[0][2] * b.m[0][0] + a.m[1][2] * b.m[0][1] + a.m[2][2] * b.m[0][2] + a.m[3][2] * b.m[0][3];
+    mul.m[0][3] = a.m[0][3] * b.m[0][0] + a.m[1][3] * b.m[0][1] + a.m[2][3] * b.m[0][2] + a.m[3][3] * b.m[0][3];
+    /*row 2 */
+    mul.m[1][0] = a.m[0][0] * b.m[1][0] + a.m[1][0] * b.m[1][1] + a.m[2][0] * b.m[1][2] + a.m[3][0] * b.m[1][3];
+    mul.m[1][1] = a.m[0][1] * b.m[1][0] + a.m[1][1] * b.m[1][1] + a.m[2][1] * b.m[1][2] + a.m[3][1] * b.m[1][3];
+    mul.m[1][2] = a.m[0][2] * b.m[1][0] + a.m[1][2] * b.m[1][1] + a.m[2][2] * b.m[1][2] + a.m[3][2] * b.m[1][3];
+    mul.m[1][3] = a.m[0][3] * b.m[1][0] + a.m[1][3] * b.m[1][1] + a.m[2][3] * b.m[1][2] + a.m[3][3] * b.m[1][3];
+    /*row 3 */
+    mul.m[2][0] = a.m[0][0] * b.m[2][0] + a.m[1][0] * b.m[2][1] + a.m[2][0] * b.m[2][2] + a.m[3][0] * b.m[2][3];
+    mul.m[2][1] = a.m[0][1] * b.m[2][0] + a.m[1][1] * b.m[2][1] + a.m[2][1] * b.m[2][2] + a.m[3][1] * b.m[2][3];
+    mul.m[2][2] = a.m[0][2] * b.m[2][0] + a.m[1][2] * b.m[2][1] + a.m[2][2] * b.m[2][2] + a.m[3][2] * b.m[2][3];
+    mul.m[2][3] = a.m[0][3] * b.m[2][0] + a.m[1][3] * b.m[2][1] + a.m[2][3] * b.m[2][2] + a.m[3][3] * b.m[2][3];
+    /*row 4 */
+    mul.m[3][0] = a.m[0][0] * b.m[3][0] + a.m[1][0] * b.m[3][1] + a.m[2][0] * b.m[3][2] + a.m[3][0] * b.m[3][3];
+    mul.m[3][1] = a.m[0][1] * b.m[3][0] + a.m[1][1] * b.m[3][1] + a.m[2][1] * b.m[3][2] + a.m[3][1] * b.m[3][3];
+    mul.m[3][2] = a.m[0][2] * b.m[3][0] + a.m[1][2] * b.m[3][1] + a.m[2][2] * b.m[3][2] + a.m[3][2] * b.m[3][3];
+    mul.m[3][3] = a.m[0][3] * b.m[3][0] + a.m[1][3] * b.m[3][1] + a.m[2][3] * b.m[3][2] + a.m[3][3] * b.m[3][3];
+    return mul;
 }
 
 /* Multiply-equals operand for two mat4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr mat4<T>& operator*=
-(mat4<T>& lhs, const mat4<T>& rhs) noexcept {
-    lhs = lhs * rhs;
-    return lhs;
+(mat4<T>& a, const mat4<T>& b) noexcept {
+    a = a * b;
+    return a;
 }
 
 /* Multiply-equals operand for mat4 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr mat4<T>& operator*=
-(mat4<T>& lhs, const U& rhs) noexcept {
-    lhs = lhs * rhs;
-    return lhs;
+(mat4<T>& a, const U& b) noexcept {
+    a = a * b;
+    return a;
 }
 
 /* Divide a mat4 by a scalar value. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr mat4<T> operator/
-(const mat4<T>& lhs, const U& rhs) noexcept {
+(const mat4<T>& a, const U& b) noexcept {
     mat4<T> c;
     /* row 1 */
-    c.m[0][0] = lhs.m[0][0] / rhs;
-    c.m[1][0] = lhs.m[1][0] / rhs;
-    c.m[2][0] = lhs.m[2][0] / rhs;
-    c.m[3][0] = lhs.m[3][0] / rhs;
+    c.m[0][0] = a.m[0][0] / b;
+    c.m[1][0] = a.m[1][0] / b;
+    c.m[2][0] = a.m[2][0] / b;
+    c.m[3][0] = a.m[3][0] / b;
     /* row 2 */
-    c.m[0][1] = lhs.m[0][1] / rhs;
-    c.m[1][1] = lhs.m[1][1] / rhs;
-    c.m[2][1] = lhs.m[2][1] / rhs;
-    c.m[3][1] = lhs.m[3][1] / rhs;
+    c.m[0][1] = a.m[0][1] / b;
+    c.m[1][1] = a.m[1][1] / b;
+    c.m[2][1] = a.m[2][1] / b;
+    c.m[3][1] = a.m[3][1] / b;
     /* row 3 */
-    c.m[0][2] = lhs.m[0][2] / rhs;
-    c.m[1][2] = lhs.m[1][2] / rhs;
-    c.m[2][2] = lhs.m[2][2] / rhs;
-    c.m[3][2] = lhs.m[3][2] / rhs;
+    c.m[0][2] = a.m[0][2] / b;
+    c.m[1][2] = a.m[1][2] / b;
+    c.m[2][2] = a.m[2][2] / b;
+    c.m[3][2] = a.m[3][2] / b;
     /* row 4 */
-    c.m[0][3] = lhs.m[0][3] / rhs;
-    c.m[1][3] = lhs.m[1][3] / rhs;
-    c.m[2][3] = lhs.m[2][3] / rhs;
-    c.m[3][3] = lhs.m[3][3] / rhs;
+    c.m[0][3] = a.m[0][3] / b;
+    c.m[1][3] = a.m[1][3] / b;
+    c.m[2][3] = a.m[2][3] / b;
+    c.m[3][3] = a.m[3][3] / b;
     return c;
 }
 
 /* Divide a mat4 by a mat4. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr mat4<T> operator/
-(const mat4<T>& lhs, const mat4<T>& rhs) noexcept {
-    return lhs * rhs.inverse();
+(const mat4<T>& a, const mat4<T>& b) noexcept {
+    return a * b.inverse();
 }
 
 /* Divide-equals operand for two mat4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr mat4<T>& operator/=
-(mat4<T>& lhs, const mat4<T>& rhs) noexcept {
-    lhs = lhs / rhs;
-    return lhs;
+(mat4<T>& a, const mat4<T>& b) noexcept {
+    a = a / b;
+    return a;
 }
 
 /* Divide-equals operand for mat4 and scalar. */
 template<typename T, typename U>
 [[nodiscard]] sf_inline constexpr mat4<T>& operator/=
-(mat4<T>& lhs, const U& rhs) noexcept {
-    lhs = lhs / rhs;
-    return lhs;
+(mat4<T>& a, const U& b) noexcept {
+    a = a / b;
+    return a;
 }
 
 /* Test two mat4s for equality. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr bool operator==
-(const mat4<T>& lhs, const mat4<T>& rhs) noexcept {
+(const mat4<T>& a, const mat4<T>& b) noexcept {
            /* row 1 */
-    return (lhs.m[0][0] == rhs.m[0][0]) && 
-           (lhs.m[1][0] == rhs.m[1][0]) && 
-           (lhs.m[2][0] == rhs.m[2][0]) &&
-           (lhs.m[3][0] == rhs.m[3][0]) && 
+    return (a.m[0][0] == b.m[0][0]) && 
+           (a.m[1][0] == b.m[1][0]) && 
+           (a.m[2][0] == b.m[2][0]) &&
+           (a.m[3][0] == b.m[3][0]) && 
            /* row 2 */
-           (lhs.m[0][1] == rhs.m[0][1]) && 
-           (lhs.m[1][1] == rhs.m[1][1]) &&
-           (lhs.m[2][1] == rhs.m[2][1]) && 
-           (lhs.m[3][1] == rhs.m[3][1]) && 
+           (a.m[0][1] == b.m[0][1]) && 
+           (a.m[1][1] == b.m[1][1]) &&
+           (a.m[2][1] == b.m[2][1]) && 
+           (a.m[3][1] == b.m[3][1]) && 
            /* row 3 */
-           (lhs.m[0][2] == rhs.m[0][2]) &&
-           (lhs.m[1][2] == rhs.m[1][2]) && 
-           (lhs.m[2][2] == rhs.m[2][2]) &&
-           (lhs.m[3][2] == rhs.m[3][2]) && 
+           (a.m[0][2] == b.m[0][2]) &&
+           (a.m[1][2] == b.m[1][2]) && 
+           (a.m[2][2] == b.m[2][2]) &&
+           (a.m[3][2] == b.m[3][2]) && 
            /* row 4 */
-           (lhs.m[0][3] == rhs.m[0][3]) &&
-           (lhs.m[1][3] == rhs.m[1][3]) && 
-           (lhs.m[2][3] == rhs.m[2][3]) &&
-           (lhs.m[3][3] == rhs.m[3][3]);
+           (a.m[0][3] == b.m[0][3]) &&
+           (a.m[1][3] == b.m[1][3]) && 
+           (a.m[2][3] == b.m[2][3]) &&
+           (a.m[3][3] == b.m[3][3]);
 }
 
 /* Tests for non-equality between two mat4s. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr bool operator!=
-(const mat4<T>& lhs, const mat4<T>& rhs) noexcept {
+(const mat4<T>& a, const mat4<T>& b) noexcept {
            /* row 1 */
-    return (lhs.m[0][0] != rhs.m[0][0]) || 
-           (lhs.m[1][0] != rhs.m[1][0]) || 
-           (lhs.m[2][0] != rhs.m[2][0]) ||
-           (lhs.m[3][0] != rhs.m[3][0]) || 
+    return (a.m[0][0] != b.m[0][0]) || 
+           (a.m[1][0] != b.m[1][0]) || 
+           (a.m[2][0] != b.m[2][0]) ||
+           (a.m[3][0] != b.m[3][0]) || 
            /* row 2 */
-           (lhs.m[0][1] != rhs.m[0][1]) || 
-           (lhs.m[1][1] != rhs.m[1][1]) ||
-           (lhs.m[2][1] != rhs.m[2][1]) || 
-           (lhs.m[3][1] != rhs.m[3][1]) || 
+           (a.m[0][1] != b.m[0][1]) || 
+           (a.m[1][1] != b.m[1][1]) ||
+           (a.m[2][1] != b.m[2][1]) || 
+           (a.m[3][1] != b.m[3][1]) || 
            /* row 3 */
-           (lhs.m[0][2] != rhs.m[0][2]) ||
-           (lhs.m[1][2] != rhs.m[1][2]) || 
-           (lhs.m[2][2] != rhs.m[2][2]) ||
-           (lhs.m[3][2] != rhs.m[3][2]) || 
+           (a.m[0][2] != b.m[0][2]) ||
+           (a.m[1][2] != b.m[1][2]) || 
+           (a.m[2][2] != b.m[2][2]) ||
+           (a.m[3][2] != b.m[3][2]) || 
            /* row 4 */
-           (lhs.m[0][3] != rhs.m[0][3]) ||
-           (lhs.m[1][3] != rhs.m[1][3]) || 
-           (lhs.m[2][3] != rhs.m[2][3]) ||
-           (lhs.m[3][3] != rhs.m[3][3]);
+           (a.m[0][3] != b.m[0][3]) ||
+           (a.m[1][3] != b.m[1][3]) || 
+           (a.m[2][3] != b.m[2][3]) ||
+           (a.m[3][3] != b.m[3][3]);
 }
 
 /* Allows for printing the members of a mat4 object to stdout. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr std::ostream& operator<<
-(std::ostream& os, const mat4<T>& rhs) {
+(std::ostream& os, const mat4<T>& b) {
     std::ios_base::fmtflags f = os.flags();
     os << std::fixed;
     os << std::endl;
     /* row 1 */
-    os << "| " << std::setprecision(5) << std::setw(10) << rhs.x0 << " " 
-               << std::setprecision(5) << std::setw(10) << rhs.x1 << " " 
-               << std::setprecision(5) << std::setw(10) << rhs.x2 << " " 
-               << std::setprecision(5) << std::setw(10) << rhs.x3 << " |" << std::endl;
+    os << "| " << std::setprecision(5) << std::setw(10) << b.x0 << " " 
+               << std::setprecision(5) << std::setw(10) << b.x1 << " " 
+               << std::setprecision(5) << std::setw(10) << b.x2 << " " 
+               << std::setprecision(5) << std::setw(10) << b.x3 << " |" << std::endl;
     /* row 2 */
-    os << "| " << std::setprecision(5) << std::setw(10) << rhs.y0 << " " 
-               << std::setprecision(5) << std::setw(10) << rhs.y1 << " " 
-               << std::setprecision(5) << std::setw(10) << rhs.y2 << " " 
-               << std::setprecision(5) << std::setw(10) << rhs.y3 << " |" << std::endl;
+    os << "| " << std::setprecision(5) << std::setw(10) << b.y0 << " " 
+               << std::setprecision(5) << std::setw(10) << b.y1 << " " 
+               << std::setprecision(5) << std::setw(10) << b.y2 << " " 
+               << std::setprecision(5) << std::setw(10) << b.y3 << " |" << std::endl;
     /* row 3 */
-    os << "| " << std::setprecision(5) << std::setw(10) << rhs.z0 << " " 
-               << std::setprecision(5) << std::setw(10) << rhs.z1 << " " 
-               << std::setprecision(5) << std::setw(10) << rhs.z2 << " " 
-               << std::setprecision(5) << std::setw(10) << rhs.z3 << " |" << std::endl;
+    os << "| " << std::setprecision(5) << std::setw(10) << b.z0 << " " 
+               << std::setprecision(5) << std::setw(10) << b.z1 << " " 
+               << std::setprecision(5) << std::setw(10) << b.z2 << " " 
+               << std::setprecision(5) << std::setw(10) << b.z3 << " |" << std::endl;
     /* row 4 */
-    os << "| " << std::setprecision(5) << std::setw(10) << rhs.w0 << " " 
-               << std::setprecision(5) << std::setw(10) << rhs.w1 << " " 
-               << std::setprecision(5) << std::setw(10) << rhs.w2 << " " 
-               << std::setprecision(5) << std::setw(10) << rhs.w3 << " |" << std::endl;
+    os << "| " << std::setprecision(5) << std::setw(10) << b.w0 << " " 
+               << std::setprecision(5) << std::setw(10) << b.w1 << " " 
+               << std::setprecision(5) << std::setw(10) << b.w2 << " " 
+               << std::setprecision(5) << std::setw(10) << b.w3 << " |" << std::endl;
     os.flags(f);
     return os;
 }
@@ -2318,13 +2390,13 @@ look_at(const vec3<T>& eye, const vec3<T>& target, const vec3<T>& up) noexcept {
 template<typename T>
 struct quat {
     union {
-        struct sf_align(4 * sizeof(T)) { 
+        struct { 
             f32 w,x,y,z; 
         };
-        struct sf_align(16) { 
+        struct { 
             f32 X,Y,Z,W; 
         };
-        struct sf_align(16) { 
+        struct { 
             f32 V[4]; 
         };
     };
@@ -2502,147 +2574,147 @@ struct quat {
 /* Add two quaternions. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr quat<T> operator+ 
-(const quat<T>& lhs, const quat<T>& rhs) {
-    return quat(lhs.w + rhs.w, 
-                lhs.x + rhs.x, 
-                lhs.y + rhs.y, 
-                lhs.z + rhs.z);
+(const quat<T>& a, const quat<T>& b) {
+    return quat(a.w + b.w, 
+                a.x + b.x, 
+                a.y + b.y, 
+                a.z + b.z);
 }
 
 /* Plus-equals operand for quaternion. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr quat<T>& operator+= 
-(quat<T>& lhs, const quat<T>& rhs) {
-    lhs.x += rhs.x; 
-    lhs.y += rhs.y; 
-    lhs.z += rhs.z; 
-    lhs.w += rhs.w;
-    return lhs;
+(quat<T>& a, const quat<T>& b) {
+    a.x += b.x; 
+    a.y += b.y; 
+    a.z += b.z; 
+    a.w += b.w;
+    return a;
 }
 
 /* Make quaternion negative. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr quat<T> operator- 
-(const quat<T>& rhs) {
+(const quat<T>& b) {
     quat<T> c; 
-    c.x = -rhs.x; 
-    c.y = -rhs.y; 
-    c.z = -rhs.z; 
-    c.w = -rhs.w; 
+    c.x = -b.x; 
+    c.y = -b.y; 
+    c.z = -b.z; 
+    c.w = -b.w; 
     return c;
 }
 
 /* Subtract a quternion from a quaternion. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr quat<T> operator- 
-(const quat<T>& lhs, const quat<T>& rhs) {
+(const quat<T>& a, const quat<T>& b) {
     quat<T> c; 
-    c.x = lhs.x - rhs.x; 
-    c.y = lhs.y - rhs.y; 
-    c.z = lhs.z - rhs.z; 
-    c.w = lhs.w - rhs.w;
+    c.x = a.x - b.x; 
+    c.y = a.y - b.y; 
+    c.z = a.z - b.z; 
+    c.w = a.w - b.w;
     return c;
 }
 
 /* Minus-equals operand for quaternion. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr quat<T>& operator-= 
-(quat<T>& lhs, const quat<T>& rhs) {
-    lhs.x -= rhs.x; 
-    lhs.y -= rhs.y; 
-    lhs.z -= rhs.z; 
-    lhs.w -= rhs.w;
-    return lhs;
+(quat<T>& a, const quat<T>& b) {
+    a.x -= b.x; 
+    a.y -= b.y; 
+    a.z -= b.z; 
+    a.w -= b.w;
+    return a;
 }
 
 /* Multiply two quaternions. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr quat<T> operator* 
-(const quat<T>& lhs, const quat<T>& rhs) {
+(const quat<T>& a, const quat<T>& b) {
     quat<T> c;
-    c.w = lhs.w * rhs.w - lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
-    c.x = lhs.w * rhs.x + rhs.w * lhs.x + lhs.y * rhs.z - lhs.z * rhs.y;
-    c.y = lhs.w * rhs.y + rhs.w * lhs.y + lhs.z * rhs.x - lhs.x * rhs.z;
-    c.z = lhs.w * rhs.z + rhs.w * lhs.z + lhs.x * rhs.y - lhs.y * rhs.x;
+    c.w = a.w * b.w - a.x * b.x + a.y * b.y + a.z * b.z;
+    c.x = a.w * b.x + b.w * a.x + a.y * b.z - a.z * b.y;
+    c.y = a.w * b.y + b.w * a.y + a.z * b.x - a.x * b.z;
+    c.z = a.w * b.z + b.w * a.z + a.x * b.y - a.y * b.x;
     return c; 
 }
 
 /* Multiply a quaternion by a scalar. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr quat<T> operator* 
-(const T& lhs, const quat<T>& rhs) {
+(const T& a, const quat<T>& b) {
     quat<T> c;
-    c.x = rhs.x * lhs; 
-    c.y = rhs.y * lhs; 
-    c.z = rhs.z * lhs; 
-    c.w = rhs.w * lhs;
+    c.x = b.x * a; 
+    c.y = b.y * a; 
+    c.z = b.z * a; 
+    c.w = b.w * a;
     return c;
 }
 
 /* Multiply a scalar by a quaternion. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr quat<T> operator* 
-(const quat<T>& lhs, const T& rhs) {
-    return rhs * lhs;
+(const quat<T>& a, const T& b) {
+    return b * a;
 }
 
 /* Multiply a quaternion by a vec3. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T> operator* 
-(const quat<T>& lhs, const vec3<T>& rhs) {
-    vec3<T> qv(lhs.x, lhs.y, lhs.z);
-    vec3<T> uv  = cross_product(qv, rhs);
+(const quat<T>& a, const vec3<T>& b) {
+    vec3<T> qv(a.x, a.y, a.z);
+    vec3<T> uv  = cross_product(qv, b);
     vec3<T> uuv = cross_product(qv, uv);
-    return rhs + ((uv * lhs.w) + uuv) * 2.0;
+    return b + ((uv * a.w) + uuv) * 2.0;
 }
 
 /* Multiply-equals operand between two quaternions. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr quat<T>& operator*= 
-(quat<T>& lhs, const quat<T>& rhs) {
-    lhs = lhs * rhs;
-    return lhs;
+(quat<T>& a, const quat<T>& b) {
+    a = a * b;
+    return a;
 }
 
 /* Multiply-equals operand with a quaternion and scalar. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr quat<T>& operator*= 
-(quat<T>& lhs, const T& rhs) {
-    lhs.x *= rhs; 
-    lhs.y *= rhs; 
-    lhs.z *= rhs; 
-    lhs.w *= rhs;
-    return lhs;
+(quat<T>& a, const T& b) {
+    a.x *= b; 
+    a.y *= b; 
+    a.z *= b; 
+    a.w *= b;
+    return a;
 }
 
 /* Checks for equality between two quaternions. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr bool operator== 
-(const quat<T>& lhs, const quat<T>& rhs) {
-    return (lhs.x == rhs.x) &&
-           (lhs.y == rhs.y) &&
-           (lhs.z == rhs.z) &&
-           (lhs.w == rhs.w);
+(const quat<T>& a, const quat<T>& b) {
+    return (a.x == b.x) &&
+           (a.y == b.y) &&
+           (a.z == b.z) &&
+           (a.w == b.w);
 }
 
 /* Checks for non-equality between two quaternions. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr bool operator!= 
-(const quat<T>& lhs, const quat<T>& rhs) {
-    return (lhs.x != rhs.x) ||
-           (lhs.y != rhs.y) ||
-           (lhs.z != rhs.z) ||
-           (lhs.w != rhs.w);
+(const quat<T>& a, const quat<T>& b) {
+    return (a.x != b.x) ||
+           (a.y != b.y) ||
+           (a.z != b.z) ||
+           (a.w != b.w);
 }
 
 /* Allows for outputting quaternion members to stdout. */
 template<typename T>
 [[nodiscard]] sf_inline constexpr std::ostream& operator<< 
-(std::ostream& os, const quat<T>& rhs) {
-    os << "(" << rhs.w << "  +" 
-              << rhs.x << "i +" 
-              << rhs.y << "j +" 
-              << rhs.z << "k)";
+(std::ostream& os, const quat<T>& b) {
+    os << "(" << b.w << "  +" 
+              << b.x << "i +" 
+              << b.y << "j +" 
+              << b.z << "k)";
     return os;
 }
 
@@ -2677,7 +2749,7 @@ template<typename T>
 [[nodiscard]] sf_inline constexpr quat<T> 
 rotate(const quat<T>& q, const T& a, const vec3<T>& v) {
     T  s = std::sin(a * 0.5);
-    quat<T> r = q * quat(std::cos(a * 0.5), v.x * s, v.y * s, v.z * s);
+    quat<T> r = q * quat<T>(std::cos(a * 0.5), v.x * s, v.y * s, v.z * s);
     return r;
 }
 
@@ -2685,7 +2757,7 @@ template<typename T>
 [[nodiscard]] sf_inline constexpr vec3<T> 
 rotate_point(const vec3<T>& p, const T& a, const vec3<T>& v) {
     T s = std::sin(a * 0.5);
-    quat<T> q = quat(std::cos(a * 0.5), v.x * s, v.y * s, v.z * s);
+    quat<T> q = quat<T>(std::cos(a * 0.5), v.x * s, v.y * s, v.z * s);
     quat<T> point(0.0, p.x, p.y, p.z);
     quat<T> qn = q * point * q.conjugate();
     vec3<T> r(qn.x, qn.y, qn.z);
@@ -2697,7 +2769,7 @@ template<typename T>
 axis_angle(const quat<T>& q, vec3<T>& axis, T& theta) {
     T mag = std::sqrt(square(q.x) + square(q.y) + square(q.z));
     theta = 2.0 * std::atan2(mag, q.w);
-    axis  = vec3(q.x, q.y, q.z) / mag;
+    axis  = vec3<T>(q.x, q.y, q.z) / mag;
 }
 
 template<typename T>
