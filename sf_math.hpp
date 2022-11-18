@@ -2575,10 +2575,10 @@ struct quat {
 template<typename T>
 [[nodiscard]] sf_inline constexpr quat<T> operator+ 
 (const quat<T>& a, const quat<T>& b) {
-    return quat(a.w + b.w, 
-                a.x + b.x, 
-                a.y + b.y, 
-                a.z + b.z);
+    return quat<T>(a.w + b.w, 
+                   a.x + b.x, 
+                   a.y + b.y, 
+                   a.z + b.z);
 }
 
 /* Plus-equals operand for quaternion. */
