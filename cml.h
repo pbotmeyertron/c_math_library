@@ -651,19 +651,19 @@ typedef simde__m512d f64x8;
 
 /* Performs equality check using machine-epsilon. */
 #define cml_math_is_equal(a, b)                                                \
-    (cml_math_abs((a) - (b)) < cml_EPSILON)
+    (cml_math_abs((a) - (b)) < CML_EPSILON)
 
 /* Performs check for inequality using machine-epsilon. */
 #define cml_math_is_not_equal(a, b)                                            \
-    (cml_math_abs((a) - (b)) >= cml_EPSILON)
+    (cml_math_abs((a) - (b)) >= CML_EPSILON)
 
 /* Performs check for less than using machine-epsilon. */
 #define cml_math_is_less(a, b)                                                 \
-    ((a) < (b) && cml_math_abs((a) - (b)) >= cml_EPSILON)
+    ((a) < (b) && cml_math_abs((a) - (b)) >= CML_EPSILON)
 
 /* Performs check for greater than using machine-epsilon. */
 #define cml_math_is_greater(a, b)                                              \
-    ((a) > (b) && cml_math_abs((a) - (b)) >= cml_EPSILON)
+    ((a) > (b) && cml_math_abs((a) - (b)) >= CML_EPSILON)
 
 /* Mutliplies a value by itself. */
 #define cml_math_square(x)                                                     \
