@@ -1,5 +1,5 @@
 # c_math_library
-Single-header, 3D math library. Uses SIMDE as the backend, which allows for compilation on platforms that don't natively support SIMD. This means that the same code will run on x86-64, ARM, RISC-V, etc, all while producing (very nearly) the most optimized code for that platform.
+Single-header, 3D math library. Uses SIMDE as the backend, which allows for compilation on platforms that don't natively support SIMD. This means that the same code will run on x86-64, ARM, PowerPC, MIPS, RISC-V, etc, all while producing (very nearly) the most optimized code for that platform.
 
 This library contains the standard linear algebra types typcially needed to do 3D graphics. Custom data types include:
  - 2D Vector  (vec2)
