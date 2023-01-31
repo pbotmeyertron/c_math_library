@@ -1729,18 +1729,20 @@ cml_math_vec4_dot_product(const vec4 a, const vec4 b) {
     return r.v[0];
 }
 
-/* Compute the cross product of two vectors. */
-cml_inline vec4
+/* Returns the cross product of a 4D vector. */
+cml_inline vec4 
 cml_math_vec4_cross_product(const vec4 a, const vec4 b) {
-    vec4 r;
-    r.v = simde_mm256_sub_pd(
-          simde_mm256_mul_pd(
-          simde_mm256_shuffle_pd(a.v, a.v, 0x05), 
-          simde_mm256_shuffle_pd(b.v, b.v, 0x0A)), 
-          simde_mm256_mul_pd(
-          simde_mm256_shuffle_pd(a.v, a.v, 0x0A), 
-          simde_mm256_shuffle_pd(b.v, b.v, 0x05)));
-    return r;
+    vec4 result, permute_b, permute_a, sub_result;
+    permute_b.v  = simde_mm256_permute4x64_pd(b.v, 
+                   SIMDE_MM_SHUFFLE(3, 0, 2, 1));
+    permute_a.v  = simde_mm256_permute4x64_pd(a.v, 
+                   SIMDE_MM_SHUFFLE(3, 0, 2, 1));
+    sub_result.v = simde_mm256_sub_pd(
+                   simde_mm256_mul_pd(a.v, permute_b.v), 
+                   simde_mm256_mul_pd(b.v, permute_a.v));
+    result.v     = simde_mm256_permute4x64_pd(sub_result.v, 
+                   SIMDE_MM_SHUFFLE(3, 0, 2, 1));
+    return result;
 }
 
 /* Compute the length of a vector. */
