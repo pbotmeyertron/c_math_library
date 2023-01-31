@@ -105,115 +105,115 @@ typedef simde__m512d f64x8;
 /*============================================================================*/
 
 /* Double-precision machine epsilon as specified in float.h */
-#define cml_EPSILON          DBL_EPSILON
+#define CML_EPSILON          DBL_EPSILON
 
 /* Single-precision machine epsilon as specified in float.h */
-#define cml_EPSILON_F32      FLT_EPSILON
+#define CML_EPSILON_F32      FLT_EPSILON
 
 /* Pi */
-#define cml_PI               3.141592653589793238462643383279502884
+#define CML_PI               3.141592653589793238462643383279502884
 
 /* Pi / 2 */
-#define cml_PI_DIV_2         1.570796326794896619231321691639751442
+#define CML_PI_DIV_2         1.570796326794896619231321691639751442
 
 /* Pi / 4 */
-#define cml_PI_DIV_4         0.785398163397448309615660845819875721
+#define CML_PI_DIV_4         0.785398163397448309615660845819875721
 
 /* 2 * Pi */
-#define cml_2_MUL_PI         6.283185307179586476925286766559005768
+#define CML_2_MUL_PI         6.283185307179586476925286766559005768
 
 /* 1 / Pi */
-#define cml_1_DIV_PI         0.318309886183790671537767526745028724
+#define CML_1_DIV_PI         0.318309886183790671537767526745028724
 
 /* 1 / (2 * Pi) */
-#define cml_1_DIV_2_MUL_PI   0.159154943091895335768883763372514362
+#define CML_1_DIV_2_MUL_PI   0.159154943091895335768883763372514362
 
 /* 1 / (4 * Pi) */
-#define cml_1_DIV_4_MUL_PI   0.079577471545947667884441881686257181
+#define CML_1_DIV_4_MUL_PI   0.079577471545947667884441881686257181
 
 /* Square root of 2 */
-#define cml_SQRT_2           1.414213562373095048801688724209698079
+#define CML_SQRT_2           1.414213562373095048801688724209698079
 
 /* Square root of 3 */
-#define cml_SQRT_3           1.732050807568877293527446341505872367
+#define CML_SQRT_3           1.732050807568877293527446341505872367
 
 /* Square root of 5 */
-#define cml_SQRT_5           2.236067977499789696409173668731276235
+#define CML_SQRT_5           2.236067977499789696409173668731276235
 
 /* Square root of 6 */
-#define cml_SQRT_6           2.449489742783178098197284074705891391
+#define CML_SQRT_6           2.449489742783178098197284074705891391
 
 /* Square root of 7 */
-#define cml_SQRT_7           2.645751311064590590501615753639260425
+#define CML_SQRT_7           2.645751311064590590501615753639260425
 
 /* Square root of 8 */
-#define cml_SQRT_8           2.828427124746190097603377448419396157
+#define CML_SQRT_8           2.828427124746190097603377448419396157
 
 /* Square root of 10 */
-#define cml_SQRT_10          3.162277660168379331998893544432718533
+#define CML_SQRT_10          3.162277660168379331998893544432718533
 
 /* Euler's number */
-#define cml_E                2.718281828459045235360287471352662498
+#define CML_E                2.718281828459045235360287471352662498
 
 /* Golden ratio */
-#define cml_GOLDEN_RATIO     1.618033988749894848204586834365638117
+#define CML_GOLDEN_RATIO     1.618033988749894848204586834365638117
 
 /* Apery's constant */
-#define cml_APERY            1.202056903159594285399738161511449990
+#define CML_APERY            1.202056903159594285399738161511449990
 
 /* Catalan's constant */
-#define cml_CATALAN          0.915965594177219015054603514932384110
+#define CML_CATALAN          0.915965594177219015054603514932384110
 
 /* Khinchin's constant */
-#define cml_KHINCHIN         2.685452001065306445309714835481795693
+#define CML_KHINCHIN         2.685452001065306445309714835481795693
 
 /* Feigenbaum's constant */
-#define cml_FEIGENBAUM       4.669201609102990671853203820466201617
+#define CML_FEIGENBAUM       4.669201609102990671853203820466201617
 
 /* Landau's constant */
-#define cml_LANDAU           0.662743419349181580974742097109252187
+#define CML_LANDAU           0.662743419349181580974742097109252187
 
 /* Lambert's constant */
-#define cml_LAMBERT          0.567143290409783872999968662210355549
+#define CML_LAMBERT          0.567143290409783872999968662210355549
 
 /* Euler-Mascheroni constant */
-#define cml_EULER_MASCHERONI 0.577215664901532860606512090082402431
+#define CML_EULER_MASCHERONI 0.577215664901532860606512090082402431
 
 /* Sierpinski's constant */
-#define cml_SIERPINSKI       1.282427129100622636875342568869791727
+#define CML_SIERPINSKI       1.282427129100622636875342568869791727
 
 /* Spence's constant */
-#define cml_SPENCE           0.419974341614026149321266416450667049
+#define CML_SPENCE           0.419974341614026149321266416450667049
 
 /* Speed of light in a vacuum */
-#define cml_C                299792458.0
+#define CML_C                299792458.0
 
 /* Planck's constant */
-#define cml_H                6.626070040e-34
+#define CML_H                6.626070040e-34
 
 /* Reduced Planck's constant */
-#define cml_H_BAR            1.054571800e-34
+#define CML_H_BAR            1.054571800e-34
 
 /* Boltzmann's constant */
-#define cml_K_B              1.38064852e-23
+#define CML_K_B              1.38064852e-23
 
 /* Avogadro's constant */
-#define cml_N_A              6.022140857e23
+#define CML_N_A              6.022140857e23
 
 /* Faraday's constant */
-#define cml_F                96485.33289
+#define CML_F                96485.33289
 
 /* Gas constant */
-#define cml_R                8.3144598
+#define CML_R                8.3144598
 
 /* Gravitational constant */
-#define cml_G                6.67408e-11
+#define CML_G                6.67408e-11
 
 /* Magnetic constant */
-#define cml_U_0              1.256637061435917295385057353311801153
+#define CML_U_0              1.256637061435917295385057353311801153
 
 /* Electric constant */
-#define cml_E_0              8.85418781762038985053656303171075098
+#define CML_E_0              8.85418781762038985053656303171075098
 
 /*============================================================================*/
 /* Elementary Functions                                                       */
