@@ -22,27 +22,27 @@
 
 /* Compiler-specific attribute to specify the alignment of a type. */
 #if defined(__GNUC__) || defined(__clang__)
-    #define csr_align(x) __attribute__((aligned(x)))
+    #define cml_align(x) __attribute__((aligned(x)))
 #elif defined(_MSC_VER)
-    #define csr_align(x) __declspec(align(x))
+    #define cml_align(x) __declspec(align(x))
 #else
     #error "Unsupported compiler"
 #endif
 
 /* Compiler-specific attribute to specify inlining. */
 #if defined(__GNUC__) || defined(__clang__)
-    #define csr_inline static __attribute__((always_inline))
+    #define cml_inline static __attribute__((always_inline))
 #elif defined(_MSC_VER)
-    #define csr_inline static __forceinline
+    #define cml_inline static __forceinline
 #else
     #error "Unsupported compiler"
 #endif
 
 /* Compiler-specific attribute to specify a function alias. */
 #if defined(__GNUC__) || defined(__clang__)
-    #define csr_alias __attribute__((alias(#x)))
+    #define cml_alias __attribute__((alias(#x)))
 #elif defined(_MSC_VER)
-    #define csr_alias __pragma(comment(linker, "/alternatename:" #x "=" #y))
+    #define cml_alias __pragma(comment(linker, "/alternatename:" #x "=" #y))
 #else
     #error "Unsupported compiler"
 #endif
@@ -105,115 +105,115 @@ typedef simde__m512d f64x8;
 /*============================================================================*/
 
 /* Double-precision machine epsilon as specified in float.h */
-#define CSR_EPSILON          DBL_EPSILON
+#define cml_EPSILON          DBL_EPSILON
 
 /* Single-precision machine epsilon as specified in float.h */
-#define CSR_EPSILON_F32      FLT_EPSILON
+#define cml_EPSILON_F32      FLT_EPSILON
 
 /* Pi */
-#define CSR_PI               3.141592653589793238462643383279502884
+#define cml_PI               3.141592653589793238462643383279502884
 
 /* Pi / 2 */
-#define CSR_PI_DIV_2         1.570796326794896619231321691639751442
+#define cml_PI_DIV_2         1.570796326794896619231321691639751442
 
 /* Pi / 4 */
-#define CSR_PI_DIV_4         0.785398163397448309615660845819875721
+#define cml_PI_DIV_4         0.785398163397448309615660845819875721
 
 /* 2 * Pi */
-#define CSR_2_MUL_PI         6.283185307179586476925286766559005768
+#define cml_2_MUL_PI         6.283185307179586476925286766559005768
 
 /* 1 / Pi */
-#define CSR_1_DIV_PI         0.318309886183790671537767526745028724
+#define cml_1_DIV_PI         0.318309886183790671537767526745028724
 
 /* 1 / (2 * Pi) */
-#define CSR_1_DIV_2_MUL_PI   0.159154943091895335768883763372514362
+#define cml_1_DIV_2_MUL_PI   0.159154943091895335768883763372514362
 
 /* 1 / (4 * Pi) */
-#define CSR_1_DIV_4_MUL_PI   0.079577471545947667884441881686257181
+#define cml_1_DIV_4_MUL_PI   0.079577471545947667884441881686257181
 
 /* Square root of 2 */
-#define CSR_SQRT_2           1.414213562373095048801688724209698079
+#define cml_SQRT_2           1.414213562373095048801688724209698079
 
 /* Square root of 3 */
-#define CSR_SQRT_3           1.732050807568877293527446341505872367
+#define cml_SQRT_3           1.732050807568877293527446341505872367
 
 /* Square root of 5 */
-#define CSR_SQRT_5           2.236067977499789696409173668731276235
+#define cml_SQRT_5           2.236067977499789696409173668731276235
 
 /* Square root of 6 */
-#define CSR_SQRT_6           2.449489742783178098197284074705891391
+#define cml_SQRT_6           2.449489742783178098197284074705891391
 
 /* Square root of 7 */
-#define CSR_SQRT_7           2.645751311064590590501615753639260425
+#define cml_SQRT_7           2.645751311064590590501615753639260425
 
 /* Square root of 8 */
-#define CSR_SQRT_8           2.828427124746190097603377448419396157
+#define cml_SQRT_8           2.828427124746190097603377448419396157
 
 /* Square root of 10 */
-#define CSR_SQRT_10          3.162277660168379331998893544432718533
+#define cml_SQRT_10          3.162277660168379331998893544432718533
 
 /* Euler's number */
-#define CSR_E                2.718281828459045235360287471352662498
+#define cml_E                2.718281828459045235360287471352662498
 
 /* Golden ratio */
-#define CSR_GOLDEN_RATIO     1.618033988749894848204586834365638117
+#define cml_GOLDEN_RATIO     1.618033988749894848204586834365638117
 
 /* Apery's constant */
-#define CSR_APERY            1.202056903159594285399738161511449990
+#define cml_APERY            1.202056903159594285399738161511449990
 
 /* Catalan's constant */
-#define CSR_CATALAN          0.915965594177219015054603514932384110
+#define cml_CATALAN          0.915965594177219015054603514932384110
 
 /* Khinchin's constant */
-#define CSR_KHINCHIN         2.685452001065306445309714835481795693
+#define cml_KHINCHIN         2.685452001065306445309714835481795693
 
 /* Feigenbaum's constant */
-#define CSR_FEIGENBAUM       4.669201609102990671853203820466201617
+#define cml_FEIGENBAUM       4.669201609102990671853203820466201617
 
 /* Landau's constant */
-#define CSR_LANDAU           0.662743419349181580974742097109252187
+#define cml_LANDAU           0.662743419349181580974742097109252187
 
 /* Lambert's constant */
-#define CSR_LAMBERT          0.567143290409783872999968662210355549
+#define cml_LAMBERT          0.567143290409783872999968662210355549
 
 /* Euler-Mascheroni constant */
-#define CSR_EULER_MASCHERONI 0.577215664901532860606512090082402431
+#define cml_EULER_MASCHERONI 0.577215664901532860606512090082402431
 
 /* Sierpinski's constant */
-#define CSR_SIERPINSKI       1.282427129100622636875342568869791727
+#define cml_SIERPINSKI       1.282427129100622636875342568869791727
 
 /* Spence's constant */
-#define CSR_SPENCE           0.419974341614026149321266416450667049
+#define cml_SPENCE           0.419974341614026149321266416450667049
 
 /* Speed of light in a vacuum */
-#define CSR_C                299792458.0
+#define cml_C                299792458.0
 
 /* Planck's constant */
-#define CSR_H                6.626070040e-34
+#define cml_H                6.626070040e-34
 
 /* Reduced Planck's constant */
-#define CSR_H_BAR            1.054571800e-34
+#define cml_H_BAR            1.054571800e-34
 
 /* Boltzmann's constant */
-#define CSR_K_B              1.38064852e-23
+#define cml_K_B              1.38064852e-23
 
 /* Avogadro's constant */
-#define CSR_N_A              6.022140857e23
+#define cml_N_A              6.022140857e23
 
 /* Faraday's constant */
-#define CSR_F                96485.33289
+#define cml_F                96485.33289
 
 /* Gas constant */
-#define CSR_R                8.3144598
+#define cml_R                8.3144598
 
 /* Gravitational constant */
-#define CSR_G                6.67408e-11
+#define cml_G                6.67408e-11
 
 /* Magnetic constant */
-#define CSR_U_0              1.256637061435917295385057353311801153
+#define cml_U_0              1.256637061435917295385057353311801153
 
 /* Electric constant */
-#define CSR_E_0              8.85418781762038985053656303171075098
+#define cml_E_0              8.85418781762038985053656303171075098
 
 /*============================================================================*/
 /* Elementary Functions                                                       */
@@ -223,7 +223,7 @@ typedef simde__m512d f64x8;
 /* Trigonometric */
 /*---------------*/
 
-#define csr_math_sin(x) _Generic((x),                                          \
+#define cml_math_sin(x) _Generic((x),                                          \
     f32:    sinf,                                                              \
     f64:    sin,                                                               \
     f32x4:  simde_mm_sin_ps,                                                   \
@@ -234,7 +234,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_sin_pd                                                 \
 )(x)
 
-#define csr_math_cos(x) _Generic((x),                                          \
+#define cml_math_cos(x) _Generic((x),                                          \
     f32:    cosf,                                                              \
     f64:    cos,                                                               \
     f32x4:  simde_mm_cos_ps,                                                   \
@@ -245,7 +245,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_cos_pd                                                 \
 )(x)
 
-#define csr_math_tan(x) _Generic((x),                                          \
+#define cml_math_tan(x) _Generic((x),                                          \
     f32:    tanf,                                                              \
     f64:    tan,                                                               \
     f32x4:  simde_mm_tan_ps,                                                   \
@@ -256,7 +256,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_tan_pd                                                 \
 )(x)
 
-#define csr_math_asin(x) _Generic((x),                                         \
+#define cml_math_asin(x) _Generic((x),                                         \
     f32:    asinf,                                                             \
     f64:    asin,                                                              \
     f32x4:  simde_mm_asin_ps,                                                  \
@@ -267,7 +267,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_asin_pd                                                \
 )(x)
 
-#define csr_math_acos(x) _Generic((x),                                         \
+#define cml_math_acos(x) _Generic((x),                                         \
     f32:    acosf,                                                             \
     f64:    acos,                                                              \
     f32x4:  simde_mm_acos_ps,                                                  \
@@ -278,7 +278,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_acos_pd                                                \
 )(x)
 
-#define csr_math_atan(x) _Generic((x),                                         \
+#define cml_math_atan(x) _Generic((x),                                         \
     f32:    atanf,                                                             \
     f64:    atan,                                                              \
     f32x4:  simde_mm_atan_ps,                                                  \
@@ -289,7 +289,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_atan_pd                                                \
 )(x)
 
-#define csr_math_atan2(y, x) _Generic((y, x),                                  \
+#define cml_math_atan2(y, x) _Generic((y, x),                                  \
     f32:    atan2f,                                                            \
     f64:    atan2,                                                             \
     f32x4:  simde_mm_atan2_ps,                                                 \
@@ -304,7 +304,7 @@ typedef simde__m512d f64x8;
 /* Hyperbolic */
 /*------------*/
 
-#define csr_math_sinh(x) _Generic((x),                                         \
+#define cml_math_sinh(x) _Generic((x),                                         \
     f32:    sinhf,                                                             \
     f64:    sinh,                                                              \
     f32x4:  simde_mm_sinh_ps,                                                  \
@@ -315,7 +315,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_sinh_pd                                                \
 )(x)
 
-#define csr_math_cosh(x) _Generic((x),                                         \
+#define cml_math_cosh(x) _Generic((x),                                         \
     f32:    coshf,                                                             \
     f64:    cosh,                                                              \
     f32x4:  simde_mm_cosh_ps,                                                  \
@@ -326,7 +326,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_cosh_pd                                                \
 )(x)
 
-#define csr_math_tanh(x) _Generic((x),                                         \
+#define cml_math_tanh(x) _Generic((x),                                         \
     f32:    tanhf,                                                             \
     f64:    tanh,                                                              \
     f32x4:  simde_mm_tanh_ps,                                                  \
@@ -337,7 +337,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_tanh_pd                                                \
 )(x)
 
-#define csr_math_asinh(x) _Generic((x),                                        \
+#define cml_math_asinh(x) _Generic((x),                                        \
     f32:    asinhf,                                                            \
     f64:    asinh,                                                             \
     f32x4:  simde_mm_asinh_ps,                                                 \
@@ -348,7 +348,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_asinh_pd                                               \
 )(x)
 
-#define csr_math_acosh(x) _Generic((x),                                        \
+#define cml_math_acosh(x) _Generic((x),                                        \
     f32:    acoshf,                                                            \
     f64:    acosh,                                                             \
     f32x4:  simde_mm_acosh_ps,                                                 \
@@ -359,7 +359,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_acosh_pd                                               \
 )(x)
 
-#define csr_math_atanh(x) _Generic((x),                                        \
+#define cml_math_atanh(x) _Generic((x),                                        \
     f32:    atanhf,                                                            \
     f64:    atanh,                                                             \
     f32x4:  simde_mm_atanh_ps,                                                 \
@@ -374,7 +374,7 @@ typedef simde__m512d f64x8;
 /* Exponential */
 /*-------------*/
 
-#define csr_math_exp(x) _Generic((x),                                          \
+#define cml_math_exp(x) _Generic((x),                                          \
     f32:    expf,                                                              \
     f64:    exp,                                                               \
     f32x4:  simde_mm_exp_ps,                                                   \
@@ -385,7 +385,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_exp_pd                                                 \
 )(x)
 
-#define csr_math_exp2(x) _Generic((x),                                         \
+#define cml_math_exp2(x) _Generic((x),                                         \
     f32:    exp2f,                                                             \
     f64:    exp2,                                                              \
     f32x4:  simde_mm_exp2_ps,                                                  \
@@ -396,7 +396,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_exp2_pd                                                \
 )(x)
 
-#define csr_math_exp10(x) _Generic((x),                                        \
+#define cml_math_exp10(x) _Generic((x),                                        \
     f32:    exp10f,                                                            \
     f64:    exp10,                                                             \
     f32x4:  simde_mm_exp10_ps,                                                 \
@@ -407,7 +407,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_exp10_pd                                               \
 )(x)
 
-#define csr_math_expm1(x) _Generic((x),                                        \
+#define cml_math_expm1(x) _Generic((x),                                        \
     f32:    expm1f,                                                            \
     f64:    expm1,                                                             \
     f32x4:  simde_mm_expm1_ps,                                                 \
@@ -422,7 +422,7 @@ typedef simde__m512d f64x8;
 /* Logarithmic */
 /*-------------*/
 
-#define csr_math_log(x) _Generic((x),                                          \
+#define cml_math_log(x) _Generic((x),                                          \
     f32:    logf,                                                              \
     f64:    log,                                                               \
     f32x4:  simde_mm_log_ps,                                                   \
@@ -433,7 +433,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_log_pd                                                 \
 )(x)
 
-#define csr_math_log2(x) _Generic((x),                                         \
+#define cml_math_log2(x) _Generic((x),                                         \
     f32:    log2f,                                                             \
     f64:    log2,                                                              \
     f32x4:  simde_mm_log2_ps,                                                  \
@@ -444,7 +444,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_log2_pd                                                \
 )(x)
 
-#define csr_math_log10(x) _Generic((x),                                        \
+#define cml_math_log10(x) _Generic((x),                                        \
     f32:    log10f,                                                            \
     f64:    log10,                                                             \
     f32x4:  simde_mm_log10_ps,                                                 \
@@ -455,7 +455,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_log10_pd                                               \
 )(x)
 
-#define csr_math_log1p(x) _Generic((x),                                        \
+#define cml_math_log1p(x) _Generic((x),                                        \
     f32:    log1pf,                                                            \
     f64:    log1p,                                                             \
     f32x4:  simde_mm_log1p_ps,                                                 \
@@ -470,7 +470,7 @@ typedef simde__m512d f64x8;
 /* Power Functions */
 /*-----------------*/
 
-#define csr_math_pow(x, y) _Generic((x),                                       \
+#define cml_math_pow(x, y) _Generic((x),                                       \
     f32:    powf,                                                              \
     f64:    pow,                                                               \
     f32x4:  simde_mm_pow_ps,                                                   \
@@ -481,7 +481,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_pow_pd                                                 \
 )(x, y)
 
-#define csr_math_sqrt(x) _Generic((x),                                         \
+#define cml_math_sqrt(x) _Generic((x),                                         \
     f32:    sqrtf,                                                             \
     f64:    sqrt,                                                              \
     f32x4:  simde_mm_sqrt_ps,                                                  \
@@ -492,7 +492,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_sqrt_pd                                                \
 )(x)
 
-#define csr_math_cbrt(x) _Generic((x),                                         \
+#define cml_math_cbrt(x) _Generic((x),                                         \
     f32:    cbrtf,                                                             \
     f64:    cbrt,                                                              \
     f32x4:  simde_mm_cbrt_ps,                                                  \
@@ -503,7 +503,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_cbrt_pd                                                \
 )(x)
 
-#define csr_math_hypot(x, y) _Generic((x),                                     \
+#define cml_math_hypot(x, y) _Generic((x),                                     \
     f32:    hypotf,                                                            \
     f64:    hypot,                                                             \
     f32x4:  simde_mm_hypot_ps,                                                 \
@@ -518,7 +518,7 @@ typedef simde__m512d f64x8;
 /* Rounding Functions */
 /*--------------------*/
 
-#define csr_math_ceil(x) _Generic((x),                                         \
+#define cml_math_ceil(x) _Generic((x),                                         \
     f32:    ceilf,                                                             \
     f64:    ceil,                                                              \
     f32x4:  simde_mm_ceil_ps,                                                  \
@@ -529,7 +529,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_ceil_pd                                                \
 )(x)
 
-#define csr_math_floor(x) _Generic((x),                                        \
+#define cml_math_floor(x) _Generic((x),                                        \
     f32:    floorf,                                                            \
     f64:    floor,                                                             \
     f32x4:  simde_mm_floor_ps,                                                 \
@@ -540,7 +540,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_floor_pd                                               \
 )(x)
 
-#define csr_math_round(x) _Generic((x),                                        \
+#define cml_math_round(x) _Generic((x),                                        \
     f32:    roundf,                                                            \
     f64:    round,                                                             \
     f32x4:  simde_mm_round_ps,                                                 \
@@ -551,7 +551,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_round_pd                                               \
 )(x)
 
-#define csr_math_trunc(x) _Generic((x),                                        \
+#define cml_math_trunc(x) _Generic((x),                                        \
     f32:    truncf,                                                            \
     f64:    trunc,                                                             \
     f32x4:  simde_mm_trunc_ps,                                                 \
@@ -562,7 +562,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_trunc_pd                                               \
 )(x)
 
-#define csr_math_rint(x) _Generic((x),                                         \
+#define cml_math_rint(x) _Generic((x),                                         \
     f32:    rintf,                                                             \
     f64:    rint,                                                              \
     f32x4:  simde_mm_rint_ps,                                                  \
@@ -573,7 +573,7 @@ typedef simde__m512d f64x8;
     f64x8:  simde_mm512_rint_pd                                                \
 )(x)
 
-#define csr_math_nearbyint(x) _Generic((x),                                    \
+#define cml_math_nearbyint(x) _Generic((x),                                    \
     f32:    nearbyintf,                                                        \
     f64:    nearbyint,                                                         \
     f32x4:  simde_mm_nearbyint_ps,                                             \
@@ -587,7 +587,7 @@ typedef simde__m512d f64x8;
 
 /* Finds the minimum value of two values. */
 #define math_utils_min(a,b) (((a) < (b)) ? (a) : (b))
-#define csr_math_min(a, b) _Generic ((a),                                      \
+#define cml_math_min(a, b) _Generic ((a),                                      \
     i8:     math_utils_min,                                                    \
     i16:    math_utils_min,                                                    \
     i32:    math_utils_min,                                                    \
@@ -609,7 +609,7 @@ typedef simde__m512d f64x8;
 
 /* Finds the maximum value of two values. */
 #define math_utils_max(a,b) (((a) > (b)) ? (a) : (b))
-#define csr_math_max(a, b) _Generic ((a),                                      \
+#define cml_math_max(a, b) _Generic ((a),                                      \
     i8:     math_utils_max,                                                    \
     i16:    math_utils_max,                                                    \
     i32:    math_utils_max,                                                    \
@@ -630,7 +630,7 @@ typedef simde__m512d f64x8;
 
 /* Finds the absolute value of a given value. */
 #define math_utils_abs(x) (((x) < 0) ? -(x) : (x))
-#define csr_math_abs(x) _Generic ((x),                                         \
+#define cml_math_abs(x) _Generic ((x),                                         \
     i8:     math_utils_abs,                                                    \
     i16:    math_utils_abs,                                                    \
     i32:    math_utils_abs,                                                    \
@@ -650,158 +650,158 @@ typedef simde__m512d f64x8;
 /*============================================================================*/
 
 /* Performs equality check using machine-epsilon. */
-#define csr_math_is_equal(a, b)                                                \
-    (csr_math_abs((a) - (b)) < CSR_EPSILON)
+#define cml_math_is_equal(a, b)                                                \
+    (cml_math_abs((a) - (b)) < cml_EPSILON)
 
 /* Performs check for inequality using machine-epsilon. */
-#define csr_math_is_not_equal(a, b)                                            \
-    (csr_math_abs((a) - (b)) >= CSR_EPSILON)
+#define cml_math_is_not_equal(a, b)                                            \
+    (cml_math_abs((a) - (b)) >= cml_EPSILON)
 
 /* Performs check for less than using machine-epsilon. */
-#define csr_math_is_less(a, b)                                                 \
-    ((a) < (b) && csr_math_abs((a) - (b)) >= CSR_EPSILON)
+#define cml_math_is_less(a, b)                                                 \
+    ((a) < (b) && cml_math_abs((a) - (b)) >= cml_EPSILON)
 
 /* Performs check for greater than using machine-epsilon. */
-#define csr_math_is_greater(a, b)                                              \
-    ((a) > (b) && csr_math_abs((a) - (b)) >= CSR_EPSILON)
+#define cml_math_is_greater(a, b)                                              \
+    ((a) > (b) && cml_math_abs((a) - (b)) >= cml_EPSILON)
 
 /* Mutliplies a value by itself. */
-#define csr_math_square(x)                                                     \
+#define cml_math_square(x)                                                     \
     ((x) * (x))
 
 /* Mutliplies a value by itself thrice. */
-#define csr_math_cube(x)                                                       \
+#define cml_math_cube(x)                                                       \
     ((x) * (x) * (x))
 
 /* Mutliplies a value by itself frice. */
-#define csr_math_quartic(x)                                                    \
+#define cml_math_quartic(x)                                                    \
     ((x) * (x) * (x) * (x))
 
 /* Mutliplies a value by itself five-rice. */
-#define csr_math_quintic(x)                                                    \
+#define cml_math_quintic(x)                                                    \
     ((x) * (x) * (x) * (x) * (x))
 
 /* Mutliplies a value by itself six times. */
-#define csr_math_sextic(x)                                                     \
+#define cml_math_sextic(x)                                                     \
     ((x) * (x) * (x) * (x) * (x) * (x))
 
 /* Mutliplies a value by itself seven times. */
-#define csr_math_septic(x)                                                     \
+#define cml_math_septic(x)                                                     \
     ((x) * (x) * (x) * (x) * (x) * (x) * (x))
 
 /* Mutliplies a value by itself eight times. */
-#define csr_math_octic(x)                                                      \
+#define cml_math_octic(x)                                                      \
     ((x) * (x) * (x) * (x) * (x) * (x) * (x) * (x))
 
 /* Mutliplies a value by itself nine times. */
-#define csr_math_nonic(x)                                                      \
+#define cml_math_nonic(x)                                                      \
     ((x) * (x) * (x) * (x) * (x) * (x) * (x) * (x) * (x))
 
 /* Mutliplies a value by itself ten times. */
-#define csr_math_decic(x)                                                      \
+#define cml_math_decic(x)                                                      \
     ((x) * (x) * (x) * (x) * (x) * (x) * (x) * (x) * (x) * (x))
 
 /* Pythagorean theorem. */
-#define csr_math_pythagorean(a, b)                                             \
-    (csr_math_sqrt(csr_math_square(a) + csr_math_square(b)))
+#define cml_math_pythagorean(a, b)                                             \
+    (cml_math_sqrt(cml_math_square(a) + cml_math_square(b)))
 
 /* Heron's formula. */
-#define csr_math_heron(a, b, c)                                                \
-    (csr_math_sqrt((a + b + c) *                                               \
+#define cml_math_heron(a, b, c)                                                \
+    (cml_math_sqrt((a + b + c) *                                               \
                    (a + b - c) *                                               \
                    (a - b + c) *                                               \
                   (-a + b + c)) / 4)                      
 
 /* Calculates the factorial of a given value. */
-#define csr_math_factorial(x)                                                  \
-    ((x) == 0 ? 1 : (x) * csr_math_factorial((x) - 1))
+#define cml_math_factorial(x)                                                  \
+    ((x) == 0 ? 1 : (x) * cml_math_factorial((x) - 1))
 
 /* Calculates the binomial coefficient of a given value. */
-#define csr_math_binomial(n, k)                                                \
-    (csr_math_factorial(n) / (csr_math_factorial(k) *                          \
-                              csr_math_factorial(n - k)))
+#define cml_math_binomial(n, k)                                                \
+    (cml_math_factorial(n) / (cml_math_factorial(k) *                          \
+                              cml_math_factorial(n - k)))
 
 /* Calculates the greatest common divisor of two given values. */
-#define csr_math_gcd(a, b)                                                     \
-    ((b) == 0 ? (a) : csr_math_gcd((b), (a) % (b)))
+#define cml_math_gcd(a, b)                                                     \
+    ((b) == 0 ? (a) : cml_math_gcd((b), (a) % (b)))
 
 /* Calculates the least common multiple of two given values. */
-#define csr_math_lcm(a, b)                                                     \
-    (((a) * (b)) / csr_math_gcd((a), (b)))
+#define cml_math_lcm(a, b)                                                     \
+    (((a) * (b)) / cml_math_gcd((a), (b)))
 
 /* Calculates the greatest common divisor of a given array of values. */
-#define csr_math_gcd_array(a, n)                                               \
-    ((n) == 1 ? (a)[0] : csr_math_gcd((a)[0],                                  \
-                         csr_math_gcd_array((a) + 1, (n) - 1)))
+#define cml_math_gcd_array(a, n)                                               \
+    ((n) == 1 ? (a)[0] : cml_math_gcd((a)[0],                                  \
+                         cml_math_gcd_array((a) + 1, (n) - 1)))
 
 /* Calculates the least common multiple of a given array of values. */
-#define csr_math_lcm_array(a, n)                                               \
-    ((n) == 1 ? (a)[0] : csr_math_lcm((a)[0],                                  \
-                         csr_math_lcm_array((a) + 1, (n) - 1)))
+#define cml_math_lcm_array(a, n)                                               \
+    ((n) == 1 ? (a)[0] : cml_math_lcm((a)[0],                                  \
+                         cml_math_lcm_array((a) + 1, (n) - 1)))
 
 /* Quadratic formula. */
-#define csr_math_quadratic(a, b, c, x)                                         \
+#define cml_math_quadratic(a, b, c, x)                                         \
     (((b) * (b)) - (4 * (a) * (c))) / (2 * (a) * (x))
 
 /* Calculates the sum of a given array of n values. */
-#define csr_math_horizontal_sum(a, n)                                          \
-    ((n) == 1 ? (a)[0] : (a)[0] + csr_math_horizontal_sum((a) + 1, (n) - 1))
+#define cml_math_horizontal_sum(a, n)                                          \
+    ((n) == 1 ? (a)[0] : (a)[0] + cml_math_horizontal_sum((a) + 1, (n) - 1))
 
 /* Calculates the product of a given array of n values. */
-#define csr_math_horizontal_product(a, n)                                      \
+#define cml_math_horizontal_product(a, n)                                      \
     ((n) == 1 ? (a)[0] : (a)[0] *                                              \
-     csr_math_horizontal_product((a) + 1, (n) - 1))
+     cml_math_horizontal_product((a) + 1, (n) - 1))
 
 /* Linear interpolation. */
-#define csr_math_lerp(a, b, t)                                                 \
+#define cml_math_lerp(a, b, t)                                                 \
     ((a) + ((b) - (a)) * (t))
 
 /* Bilinear interpolation. */
-#define csr_math_bilerp(a, b, c, d, t, u)                                      \
-    (csr_math_lerp(csr_math_lerp((a), (b), (t)),                               \
-                   csr_math_lerp((c), (d), (t)), (u)))
+#define cml_math_bilerp(a, b, c, d, t, u)                                      \
+    (cml_math_lerp(cml_math_lerp((a), (b), (t)),                               \
+                   cml_math_lerp((c), (d), (t)), (u)))
 
 /* Trilinear interpolation. */
-#define csr_math_trilerp(a, b, c, d, e, f, g, h, t, u, v)                      \
-    (csr_math_lerp(csr_math_bilerp((a), (b), (c), (d), (t), (u)),              \
-                   csr_math_bilerp((e), (f), (g), (h), (t), (u)), (v)))
+#define cml_math_trilerp(a, b, c, d, e, f, g, h, t, u, v)                      \
+    (cml_math_lerp(cml_math_bilerp((a), (b), (c), (d), (t), (u)),              \
+                   cml_math_bilerp((e), (f), (g), (h), (t), (u)), (v)))
 
 /* Barycentric interpolation. */
-#define csr_math_barycentric(a, b, c, t, u)                                    \
-    (csr_math_lerp(csr_math_lerp((a), (b), (t)),                               \
+#define cml_math_barycentric(a, b, c, t, u)                                    \
+    (cml_math_lerp(cml_math_lerp((a), (b), (t)),                               \
                    (c), (u)))
 
 /* Catmull-Rom interpolation. */
-#define csr_math_catmullrom(a, b, c, d, t)                                     \
-    (csr_math_lerp(csr_math_barycentric((a), (b), (c), (t), 0.5),              \
-                   csr_math_barycentric((b), (c), (d), (t), 0.5), (t)))
+#define cml_math_catmullrom(a, b, c, d, t)                                     \
+    (cml_math_lerp(cml_math_barycentric((a), (b), (c), (t), 0.5),              \
+                   cml_math_barycentric((b), (c), (d), (t), 0.5), (t)))
 
 /* Hermite interpolation. */
-#define csr_math_hermite(a, b, c, d, t)                                        \
-    (csr_math_lerp(csr_math_barycentric((a), (b), (c), (t), 0.5),              \
-                   csr_math_barycentric((b), (c), (d), (t), 0.5),              \
-                   csr_math_square((t))))
+#define cml_math_hermite(a, b, c, d, t)                                        \
+    (cml_math_lerp(cml_math_barycentric((a), (b), (c), (t), 0.5),              \
+                   cml_math_barycentric((b), (c), (d), (t), 0.5),              \
+                   cml_math_square((t))))
 
 /* Bezier interpolation. */
-#define csr_math_bezier(a, b, c, d, t)                                         \
-    (csr_math_lerp(csr_math_barycentric((a), (b), (c), (t), 0.5),              \
-                   csr_math_barycentric((b), (c), (d), (t), 0.5),              \
-                   csr_math_cube((t))))
+#define cml_math_bezier(a, b, c, d, t)                                         \
+    (cml_math_lerp(cml_math_barycentric((a), (b), (c), (t), 0.5),              \
+                   cml_math_barycentric((b), (c), (d), (t), 0.5),              \
+                   cml_math_cube((t))))
 
 /* Calculates the size of an array in bytes. */
-#define csr_math_array_size(x)                                                 \
+#define cml_math_array_size(x)                                                 \
     (sizeof(x) / sizeof(x[0]))
 
 /* Calculates the size of a structure member */
-#define csr_math_field_sizeof(t, f)                                            \
+#define cml_math_field_sizeof(t, f)                                            \
     (sizeof(((t *)0)->f))
 
 /* Calculates the number of elements in a structure member */
-#define csr_math_field_countof(t, f)                                           \
-    (csr_math_array_size(((t *)0)->f))
+#define cml_math_field_countof(t, f)                                           \
+    (cml_math_array_size(((t *)0)->f))
 
 /* Calculates the offset of a structure member */
-#define csr_math_field_offset(t, f)                                            \
+#define cml_math_field_offset(t, f)                                            \
     ((size_t) &((t *)0)->f)
 
 /*---------------------------------*/
@@ -810,8 +810,8 @@ typedef simde__m512d f64x8;
 
 /* Reinterprets a 32-bit f32 as a 32-bit unsigned integer. Avoids the
  * potential undefined behavior of reinterpret_cast<>. */
-csr_inline u32 
-csr_math_reinterpret_f32_as_u32(f32 f) {
+cml_inline u32 
+cml_math_reinterpret_f32_as_u32(f32 f) {
     u32 ret;
     memcpy(&ret, &f, sizeof(f));
     return ret;
@@ -819,8 +819,8 @@ csr_math_reinterpret_f32_as_u32(f32 f) {
 
 /* Reinterprets a 32-bit unsigned integer as a 32-bit f32. Avoids the
  * potential undefined behavior of reinterpret_cast<>. */
-csr_inline f32 
-csr_math_reinterpret_u32_as_f32(u32 u) {
+cml_inline f32 
+cml_math_reinterpret_u32_as_f32(u32 u) {
     f32 ret;
     memcpy(&ret, &u, sizeof(u));
     return ret;
@@ -828,8 +828,8 @@ csr_math_reinterpret_u32_as_f32(u32 u) {
 
 /* Reinterprets a 64-bit f32 as a 64-bit unsigned integer. Avoids the
  * potential undefined behavior of reinterpret_cast<>. */
-csr_inline u64 
-csr_math_reinterpret_f64_as_u64(f64 d) {
+cml_inline u64 
+cml_math_reinterpret_f64_as_u64(f64 d) {
     u64 ret;
     memcpy(&ret, &d, sizeof(d));
     return ret;
@@ -837,8 +837,8 @@ csr_math_reinterpret_f64_as_u64(f64 d) {
 
 /* Reinterprets a 64-bit unsigned integer as a 64-bit f32. Avoids the
  * potential undefined behavior of reinterpret_cast<>. */
-csr_inline f64 
-csr_math_reinterpret_u64_as_f64(u64 u) {
+cml_inline f64 
+cml_math_reinterpret_u64_as_f64(u64 u) {
     f64 ret;
     memcpy(&ret, &u, sizeof(u));
     return ret;
@@ -846,8 +846,8 @@ csr_math_reinterpret_u64_as_f64(u64 u) {
 
 /* Reinterprets a simde__m128d as a simde__m128i. Avoids the potential undefined
  * behavior of reinterpret_cast<>. */
-csr_inline simde__m128i
-csr_math_reinterpret_m128d_as_m128i(simde__m128d d) {
+cml_inline simde__m128i
+cml_math_reinterpret_m128d_as_m128i(simde__m128d d) {
     simde__m128i ret;
     memcpy(&ret, &d, sizeof(d));
     return ret;
@@ -855,8 +855,8 @@ csr_math_reinterpret_m128d_as_m128i(simde__m128d d) {
 
 /* Reinterprets a simde__m128i as a simde__m128d. Avoids the potential undefined
  * behavior of reinterpret_cast<>. */
-csr_inline simde__m128d
-csr_math_reinterpret_m128i_as_m128d(simde__m128i i) {
+cml_inline simde__m128d
+cml_math_reinterpret_m128i_as_m128d(simde__m128i i) {
     simde__m128d ret;
     memcpy(&ret, &i, sizeof(i));
     return ret;
@@ -864,8 +864,8 @@ csr_math_reinterpret_m128i_as_m128d(simde__m128i i) {
 
 /* Reinterprets a simde__m256d as a simde__m256i. Avoids the potential undefined
  * behavior of reinterpret_cast<>. */
-csr_inline simde__m256i
-csr_math_reinterpret_m256d_as_m256i(simde__m256d d) {
+cml_inline simde__m256i
+cml_math_reinterpret_m256d_as_m256i(simde__m256d d) {
     simde__m256i ret;
     memcpy(&ret, &d, sizeof(d));
     return ret;
@@ -873,8 +873,8 @@ csr_math_reinterpret_m256d_as_m256i(simde__m256d d) {
 
 /* Reinterprets a simde__m256i as a simde__m256d. Avoids the potential undefined
  * behavior of reinterpret_cast<>. */
-csr_inline simde__m256d
-csr_math_reinterpret_m256i_as_m256d(simde__m256i i) {
+cml_inline simde__m256d
+cml_math_reinterpret_m256i_as_m256d(simde__m256i i) {
     simde__m256d ret;
     memcpy(&ret, &i, sizeof(i));
     return ret;
@@ -882,8 +882,8 @@ csr_math_reinterpret_m256i_as_m256d(simde__m256i i) {
 
 /* Reinterprets a simde__m512d as a simde__m512i. Avoids the potential undefined
  * behavior of reinterpret_cast<>. */
-csr_inline simde__m512i
-csr_math_reinterpret_m512d_as_m512i(simde__m512d d) {
+cml_inline simde__m512i
+cml_math_reinterpret_m512d_as_m512i(simde__m512d d) {
     simde__m512i ret;
     memcpy(&ret, &d, sizeof(d));
     return ret;
@@ -891,8 +891,8 @@ csr_math_reinterpret_m512d_as_m512i(simde__m512d d) {
 
 /* Reinterprets a simde__m512i as a simde__m512d. Avoids the potential undefined
  * behavior of reinterpret_cast<>. */
-csr_inline simde__m512d
-csr_math_reinterpret_m512i_as_m512d(simde__m512i i) {
+cml_inline simde__m512d
+cml_math_reinterpret_m512i_as_m512d(simde__m512i i) {
     simde__m512d ret;
     memcpy(&ret, &i, sizeof(i));
     return ret;
@@ -919,8 +919,8 @@ rotl(const u64 x, i32 k) {
 }
 
 /* Returns a random number in the range [0, 2^64). */
-csr_inline u64 
-csr_math_rand(void) {
+cml_inline u64 
+cml_math_rand(void) {
     const u64 result = rotl(seed[1] * 5, 7) * 9;
     const u64 t = seed[1] << 17;
     seed[2] ^= seed[0];
@@ -933,8 +933,8 @@ csr_math_rand(void) {
 }
 
 /* Returns a random number in the range [0, 2^32). */
-csr_inline f64 
-csr_math_rand_f64(void) {
+cml_inline f64 
+cml_math_rand_f64(void) {
     const u64 result = rotl(seed[1] * 5, 7) * 9;
     const u64 t = seed[1] << 17;
     seed[2] ^= seed[0];
@@ -959,7 +959,7 @@ csr_math_rand_f64(void) {
 static simde__m128i seedx2[2] = {{1,2}, {3,4}};
                                
 
-csr_inline simde__m128i 
+cml_inline simde__m128i 
 rotlx2(const simde__m128i x, const i32 k) {
     const simde__m128i k_mask   = simde_mm_set_epi64x(k, k);
     const simde__m128i rot_mask = simde_mm_set_epi64x(64 - k, 64 - k);
@@ -969,8 +969,8 @@ rotlx2(const simde__m128i x, const i32 k) {
 }
 
 /* Returns 2 random numbers in the range [0, 2^64) in the form of __m128i. */
-csr_inline simde__m128i 
-csr_math_randx2(void) {
+cml_inline simde__m128i 
+cml_math_randx2(void) {
     const simde__m128i result = simde_mm_mul_epu32(seedx2[1], 
                                 simde_mm_set_epi64x(5, 9));
     const simde__m128i t      = simde_mm_slli_epi64(seedx2[1], 17);
@@ -985,8 +985,8 @@ csr_math_randx2(void) {
 
 /* Returns 2 random doubles in the range [0, 2^32) in the form
  * of simde__m128d. */
-csr_inline simde__m128d 
-csr_math_randx2_f64(void) {
+cml_inline simde__m128d 
+cml_math_randx2_f64(void) {
     const simde__m128i result = simde_mm_mul_epu32(seedx2[1], 
                                 simde_mm_set_epi64x(5, 9));
     const simde__m128i t      = simde_mm_slli_epi64(seedx2[1], 17);
@@ -1004,7 +1004,7 @@ csr_math_randx2_f64(void) {
 /* Generates four random numbers */
 /*-------------------------------*/
 
-csr_inline simde__m256i 
+cml_inline simde__m256i 
 rotlx4(const simde__m256i x, i32 k) {
     #if defined(_MSC_VER)
         return simde_mm256_or_si256(
@@ -1027,8 +1027,8 @@ static simde__m256i seedx4[4] = {{1, 2, 3, 4},
 
 /* Returns 4 random numbers in the range [0, 2^64) in the form
  * of simde__m256i. */
-csr_inline simde__m256i 
-csr_math_randx4(void) {
+cml_inline simde__m256i 
+cml_math_randx4(void) {
     const simde__m256i result = simde_mm256_add_epi64(seedx4[0], seedx4[3]);
     const simde__m256i t      = simde_mm256_xor_si256(seedx4[1], seedx4[0]);
     seedx4[2]                 = simde_mm256_xor_si256(seedx4[2], seedx4[0]);
@@ -1041,7 +1041,7 @@ csr_math_randx4(void) {
 
 /* SIMDE apparently doesn't implement this function, so here's what the
  * intrinsics logic should look like. */
-csr_inline simde__m256d 
+cml_inline simde__m256d 
 simde_mm256_cvtepi64_pd(simde__m256i a) {
     simde__m256d result;
     result[0] = (f64)a[0];
@@ -1053,8 +1053,8 @@ simde_mm256_cvtepi64_pd(simde__m256i a) {
 
 /* Returns 4 random doubles in the range [0, 2^64) in the form
  * of simde__m256d. */
-csr_inline simde__m256d 
-csr_math_randx4_f64(void) {
+cml_inline simde__m256d 
+cml_math_randx4_f64(void) {
     const simde__m256i result = simde_mm256_add_epi64(seedx4[0], seedx4[3]);
     const simde__m256i t      = simde_mm256_xor_si256(seedx4[1], seedx4[0]);
     seedx4[2]                 = simde_mm256_xor_si256(seedx4[2], seedx4[0]);
@@ -1090,56 +1090,56 @@ typedef struct vec2 {
 /*--------------------------*/
 
 /* Set vector elements individually. */
-csr_inline vec2
-csr_math_vec2_set(const f64 x, const f64 y) {
+cml_inline vec2
+cml_math_vec2_set(const f64 x, const f64 y) {
     vec2 v;
     v.v = simde_mm_set_pd(y, x);
     return v;
 }
 
 /* Set vector elements from an array. */
-csr_inline vec2
-csr_math_vec2_set_from_array(const f64* a) {
+cml_inline vec2
+cml_math_vec2_set_from_array(const f64* a) {
     vec2 v;
     v.v = simde_mm_loadu_pd(a);
     return v;
 }
 
 /* Set vector elements from a scalar. */
-csr_inline vec2
-csr_math_vec2_set_from_scalar(const f64 s) {
+cml_inline vec2
+cml_math_vec2_set_from_scalar(const f64 s) {
     vec2 v;
     v.v = simde_mm_set1_pd(s);
     return v;
 }
 
 /* Set vector elements from a 2D vector. */
-csr_inline vec2
-csr_math_vec2_set_from_vec2(const vec2 v) {
+cml_inline vec2
+cml_math_vec2_set_from_vec2(const vec2 v) {
     vec2 r;
     r.v = v.v;
     return r;
 }
 
 /* Set vector elements to zero. */
-csr_inline vec2
-csr_math_vec2_zero(void) {
+cml_inline vec2
+cml_math_vec2_zero(void) {
     vec2 v;
     v.v = simde_mm_setzero_pd();
     return v;
 }
 
 /* Set vector elements to one. */
-csr_inline vec2
-csr_math_vec2_one(void) {
+cml_inline vec2
+cml_math_vec2_one(void) {
     vec2 v;
     v.v = simde_mm_set1_pd(1.0);
     return v;
 }
 
 /* Set vector elements to infinity. */
-csr_inline vec2
-csr_math_vec2_infinity(void) {
+cml_inline vec2
+cml_math_vec2_infinity(void) {
     vec2 v;
     v.v = simde_mm_set1_pd(HUGE_VAL);
     return v;
@@ -1150,112 +1150,112 @@ csr_math_vec2_infinity(void) {
 /*----------------------*/
 
 /* Add two vectors. */
-csr_inline vec2
-csr_math_vec2_add(const vec2 a, const vec2 b) {
+cml_inline vec2
+cml_math_vec2_add(const vec2 a, const vec2 b) {
     vec2 v;
     v.v = simde_mm_add_pd(a.v, b.v);
     return v;
 }
 
 /* Add a vector and a scalar. */
-csr_inline vec2
-csr_math_vec2_add_scalar(const vec2 a, const f64 b) {
+cml_inline vec2
+cml_math_vec2_add_scalar(const vec2 a, const f64 b) {
     vec2 v;
     v.v = simde_mm_add_pd(a.v, simde_mm_set1_pd(b));
     return v;
 }
 
 /* Subtract two vectors. */
-csr_inline vec2
-csr_math_vec2_sub(const vec2 a, const vec2 b) {
+cml_inline vec2
+cml_math_vec2_sub(const vec2 a, const vec2 b) {
     vec2 v;
     v.v = simde_mm_sub_pd(a.v, b.v);
     return v;
 }
 
 /* Negate a vector. */
-csr_inline vec2
-csr_math_vec2_neg(const vec2 a) {
+cml_inline vec2
+cml_math_vec2_neg(const vec2 a) {
     vec2 v;
     v.v = simde_mm_sub_pd(simde_mm_setzero_pd(), a.v);
     return v;
 }
 
 /* Subtract a vector and a scalar. */
-csr_inline vec2
-csr_math_vec2_sub_scalar(const vec2 a, const f64 b) {
+cml_inline vec2
+cml_math_vec2_sub_scalar(const vec2 a, const f64 b) {
     vec2 v;
     v.v = simde_mm_sub_pd(a.v, simde_mm_set1_pd(b));
     return v;
 }
 
 /* Multiply two vectors. */
-csr_inline vec2
-csr_math_vec2_mul(const vec2 a, const vec2 b) {
+cml_inline vec2
+cml_math_vec2_mul(const vec2 a, const vec2 b) {
     vec2 v;
     v.v = simde_mm_mul_pd(a.v, b.v);
     return v;
 }
 
 /* Multiply a vector and a scalar. */
-csr_inline vec2
-csr_math_vec2_mul_scalar(const vec2 a, const f64 b) {
+cml_inline vec2
+cml_math_vec2_mul_scalar(const vec2 a, const f64 b) {
     vec2 v;
     v.v = simde_mm_mul_pd(a.v, simde_mm_set1_pd(b));
     return v;
 }
 
 /* Divide two vectors. */
-csr_inline vec2
-csr_math_vec2_div(const vec2 a, const vec2 b) {
+cml_inline vec2
+cml_math_vec2_div(const vec2 a, const vec2 b) {
     vec2 v;
     v.v = simde_mm_div_pd(a.v, b.v);
     return v;
 }
 
 /* Divide a vector and a scalar. */
-csr_inline vec2
-csr_math_vec2_div_scalar(const vec2 a, const f64 b) {
+cml_inline vec2
+cml_math_vec2_div_scalar(const vec2 a, const f64 b) {
     vec2 v;
     v.v = simde_mm_div_pd(a.v, simde_mm_set1_pd(b));
     return v;
 }
 
 /* Compute the component-wise minimum of two vectors. */
-csr_inline vec2
-csr_math_vec2_min(const vec2 a, const vec2 b) {
+cml_inline vec2
+cml_math_vec2_min(const vec2 a, const vec2 b) {
     vec2 r;
     r.v = simde_mm_min_pd(a.v, b.v);
     return r;
 }
 
 /* Compute the component-wise maximum of two vectors. */
-csr_inline vec2
-csr_math_vec2_max(const vec2 a, const vec2 b) {
+cml_inline vec2
+cml_math_vec2_max(const vec2 a, const vec2 b) {
     vec2 r;
     r.v = simde_mm_max_pd(a.v, b.v);
     return r;
 }
 
 /* Compute the component-wise absolute value of a vector. */
-csr_inline vec2
-csr_math_vec2_abs(const vec2 a) {
+cml_inline vec2
+cml_math_vec2_abs(const vec2 a) {
     vec2 r;
     r.v = simde_mm_andnot_pd(simde_mm_set1_pd(-0.0), a.v);
     return r;
 }
 
 /* Compute the component-wise square root of a vector. */
-csr_inline vec2
-csr_math_vec2_sqrt(const vec2 a) {
+cml_inline vec2
+cml_math_vec2_sqrt(const vec2 a) {
     vec2 r;
     r.v = simde_mm_sqrt_pd(a.v);
     return r;
 }
 
 /* Compute the component-wise reciprocal square root of a vector. */
-csr_inline vec2
-csr_math_vec2_rsqrt(const vec2 a) {
+cml_inline vec2
+cml_math_vec2_rsqrt(const vec2 a) {
     vec2 r;
     r.v = simde_mm_div_pd(
           simde_mm_set1_pd(1.0), 
@@ -1264,8 +1264,8 @@ csr_math_vec2_rsqrt(const vec2 a) {
 }
 
 /* Compute the component-wise reciprocal of a vector. */
-csr_inline vec2
-csr_math_vec2_rcp(const vec2 a) {
+cml_inline vec2
+cml_math_vec2_rcp(const vec2 a) {
     vec2 r;
     r.v = simde_mm_div_pd(
           simde_mm_set1_pd(1.0), 
@@ -1274,24 +1274,24 @@ csr_math_vec2_rcp(const vec2 a) {
 }
 
 /* Compute the component-wise square of a vector. */
-csr_inline vec2
-csr_math_vec2_square(const vec2 a) {
+cml_inline vec2
+cml_math_vec2_square(const vec2 a) {
     vec2 r;
     r.v = simde_mm_mul_pd(a.v, a.v);
     return r;
 }
 
 /* Compute the component-wise cube of a vector. */
-csr_inline vec2
-csr_math_vec2_cube(const vec2 a) {
+cml_inline vec2
+cml_math_vec2_cube(const vec2 a) {
     vec2 r;
     r.v = simde_mm_mul_pd(a.v, simde_mm_mul_pd(a.v, a.v));
     return r;
 }
 
 /* Compute the component-wise exponent of a vector. */
-csr_inline vec2
-csr_math_vec2_exp(const vec2 a) {
+cml_inline vec2
+cml_math_vec2_exp(const vec2 a) {
     vec2 r;
     r.v = simde_mm_exp_pd(a.v);
     return r;
@@ -1302,32 +1302,32 @@ csr_math_vec2_exp(const vec2 a) {
 /*----------------------*/
 
 /* Compare two vectors for equality. */
-csr_inline vec2
-csr_math_vec2_is_equal(const vec2 a, const vec2 b) {
+cml_inline vec2
+cml_math_vec2_is_equal(const vec2 a, const vec2 b) {
     vec2 v;
     v.v = simde_mm_cmpeq_pd(a.v, b.v);
     return v;
 }
 
 /* Compare two vectors for inequality. */
-csr_inline vec2
-csr_math_vec2_is_not_equal(const vec2 a, const vec2 b) {
+cml_inline vec2
+cml_math_vec2_is_not_equal(const vec2 a, const vec2 b) {
     vec2 v;
     v.v = simde_mm_cmpneq_pd(a.v, b.v);
     return v;
 }
 
 /* Compare two vectors for less than. */
-csr_inline vec2
-csr_math_vec2_is_less(const vec2 a, const vec2 b) {
+cml_inline vec2
+cml_math_vec2_is_less(const vec2 a, const vec2 b) {
     vec2 v;
     v.v = simde_mm_cmplt_pd(a.v, b.v);
     return v;
 }
 
 /* Compare two vectors for greater than. */
-csr_inline vec2
-csr_math_vec2_is_greater(const vec2 a, const vec2 b) {
+cml_inline vec2
+cml_math_vec2_is_greater(const vec2 a, const vec2 b) {
     vec2 v;
     v.v = simde_mm_cmpgt_pd(a.v, b.v);
     return v;
@@ -1338,8 +1338,8 @@ csr_math_vec2_is_greater(const vec2 a, const vec2 b) {
 /*---------------------------*/
 
 /* Compute the length of a vector. */
-csr_inline f64
-csr_math_vec2_length(const vec2 v) {
+cml_inline f64
+cml_math_vec2_length(const vec2 v) {
     vec2 r;
     r.v = simde_mm_mul_pd(v.v, v.v);
     r.v = simde_mm_hadd_pd(r.v, r.v);
@@ -1347,8 +1347,8 @@ csr_math_vec2_length(const vec2 v) {
 }
 
 /* Compute the squared length of a vector. */
-csr_inline f64
-csr_math_vec2_length_squared(const vec2 v) {
+cml_inline f64
+cml_math_vec2_length_squared(const vec2 v) {
     vec2 r;
     r.v = simde_mm_mul_pd(v.v, v.v);
     r.v = simde_mm_hadd_pd(r.v, r.v);
@@ -1356,8 +1356,8 @@ csr_math_vec2_length_squared(const vec2 v) {
 }
 
 /* Compute the distance between two vectors. */
-csr_inline f64
-csr_math_vec2_distance(const vec2 a, const vec2 b) {
+cml_inline f64
+cml_math_vec2_distance(const vec2 a, const vec2 b) {
     vec2 v;
     v.v = simde_mm_sub_pd(a.v, b.v);
     v.v = simde_mm_mul_pd(v.v, v.v);
@@ -1366,8 +1366,8 @@ csr_math_vec2_distance(const vec2 a, const vec2 b) {
 }
 
 /* Compute the squared distance between two vectors. */
-csr_inline f64
-csr_math_vec2_distance_squared(const vec2 a, const vec2 b) {
+cml_inline f64
+cml_math_vec2_distance_squared(const vec2 a, const vec2 b) {
     vec2 v;
     v.v = simde_mm_sub_pd(a.v, b.v);
     v.v = simde_mm_mul_pd(v.v, v.v);
@@ -1376,8 +1376,8 @@ csr_math_vec2_distance_squared(const vec2 a, const vec2 b) {
 }
 
 /* Normalize a vector. */
-csr_inline vec2
-csr_math_vec2_normalize(const vec2 v) {
+cml_inline vec2
+cml_math_vec2_normalize(const vec2 v) {
     vec2 r;
     r.v = simde_mm_mul_pd(v.v, v.v);
     r.v = simde_mm_hadd_pd(r.v, r.v);
@@ -1386,8 +1386,8 @@ csr_math_vec2_normalize(const vec2 v) {
 }
 
 /* Compute the dot product of two vectors. */
-csr_inline f64
-csr_math_vec2_dot_product(const vec2 a, const vec2 b) {
+cml_inline f64
+cml_math_vec2_dot_product(const vec2 a, const vec2 b) {
     vec2 v;
     v.v = simde_mm_mul_pd(a.v, b.v);
     v.v = simde_mm_hadd_pd(v.v, v.v);
@@ -1395,8 +1395,8 @@ csr_math_vec2_dot_product(const vec2 a, const vec2 b) {
 }
 
 /* Compute the cross product of two vectors. */
-csr_inline f64
-csr_math_vec2_cross_product(const vec2 a, const vec2 b) {
+cml_inline f64
+cml_math_vec2_cross_product(const vec2 a, const vec2 b) {
     vec2 v;
     v.v = simde_mm_shuffle_pd(a.v, a.v, 1);
     v.v = simde_mm_mul_pd(v.v, b.v);
@@ -1406,8 +1406,8 @@ csr_math_vec2_cross_product(const vec2 a, const vec2 b) {
 }
 
 /* Compute the angle between two vectors. */
-csr_inline f64
-csr_math_vec2_angle(const vec2 a, const vec2 b) {
+cml_inline f64
+cml_math_vec2_angle(const vec2 a, const vec2 b) {
     vec2 v;
     v.v = simde_mm_mul_pd(a.v, b.v);
     v.v = simde_mm_hadd_pd(v.v, v.v);
@@ -1421,8 +1421,8 @@ csr_math_vec2_angle(const vec2 a, const vec2 b) {
 }
 
 /* Reflect a vector about a normal. */
-csr_inline vec2
-csr_math_vec2_reflect(const vec2 v, const vec2 n) {
+cml_inline vec2
+cml_math_vec2_reflect(const vec2 v, const vec2 n) {
     vec2 r;
     r.v = simde_mm_mul_pd(n.v, n.v);
     r.v = simde_mm_hadd_pd(r.v, r.v);
@@ -1433,8 +1433,8 @@ csr_math_vec2_reflect(const vec2 v, const vec2 n) {
 }
 
 /* Compute the projection of a vector onto another vector. */
-csr_inline vec2
-csr_math_vec2_project(const vec2 v, const vec2 n) {
+cml_inline vec2
+cml_math_vec2_project(const vec2 v, const vec2 n) {
     vec2 r;
     r.v = simde_mm_mul_pd(n.v, n.v);
     r.v = simde_mm_hadd_pd(r.v, r.v);
@@ -1445,8 +1445,8 @@ csr_math_vec2_project(const vec2 v, const vec2 n) {
 }
 
 /* Compute the component-wise lerp of two vectors. */
-csr_inline vec2
-csr_math_vec2_lerp(const vec2 a, const vec2 b, const f64 t) {
+cml_inline vec2
+cml_math_vec2_lerp(const vec2 a, const vec2 b, const f64 t) {
     vec2 r;
     r.v = simde_mm_sub_pd(b.v, a.v);
     r.v = simde_mm_mul_pd(r.v, simde_mm_set1_pd(t));
@@ -1455,8 +1455,8 @@ csr_math_vec2_lerp(const vec2 a, const vec2 b, const f64 t) {
 }
 
 /* Compute the component-wise smoothstep of two vectors. */
-csr_inline vec2
-csr_math_vec2_smoothstep(const vec2 a, const vec2 b, const f64 t) {
+cml_inline vec2
+cml_math_vec2_smoothstep(const vec2 a, const vec2 b, const f64 t) {
     vec2 r;
     r.v = simde_mm_sub_pd(b.v, a.v);
     r.v = simde_mm_mul_pd(r.v, simde_mm_set1_pd(t));
@@ -1471,8 +1471,8 @@ csr_math_vec2_smoothstep(const vec2 a, const vec2 b, const f64 t) {
 }
 
 /* Compute the component-wise clamp of a vector. */
-csr_inline vec2
-csr_math_vec2_clamp(const vec2 v, const vec2 min, const vec2 max) {
+cml_inline vec2
+cml_math_vec2_clamp(const vec2 v, const vec2 min, const vec2 max) {
     vec2 r;
     r.v = simde_mm_min_pd(v.v, max.v);
     r.v = simde_mm_max_pd(r.v, min.v);
@@ -1480,8 +1480,8 @@ csr_math_vec2_clamp(const vec2 v, const vec2 min, const vec2 max) {
 }
 
 /* Print a vector to stdout. */
-csr_inline void
-csr_math_vec2_print(const vec2 v) {
+cml_inline void
+cml_math_vec2_print(const vec2 v) {
     f64 a[2];
     simde_mm_storeu_pd(a, v.v);
     printf("%f %f ", a[0], a[1]);
@@ -1496,56 +1496,56 @@ typedef struct vec4 {
 } vec4;
 
 /* Set vector elements individually. */
-csr_inline vec4
-csr_math_vec4_set(const f64 x, const f64 y, const f64 z, const f64 w) {
+cml_inline vec4
+cml_math_vec4_set(const f64 x, const f64 y, const f64 z, const f64 w) {
     vec4 r;
     r.v = simde_mm256_set_pd(w, z, y, x);
     return r;
 }
 
 /* Set vector elements from an array. */
-csr_inline vec4
-csr_math_vec4_set_array(const f64 *a) {
+cml_inline vec4
+cml_math_vec4_set_array(const f64 *a) {
     vec4 r;
     r.v = simde_mm256_loadu_pd(a);
     return r;
 }
 
 /* Set vector elements from a scalar. */
-csr_inline vec4
-csr_math_vec4_set_scalar(const f64 s) {
+cml_inline vec4
+cml_math_vec4_set_scalar(const f64 s) {
     vec4 r;
     r.v = simde_mm256_set1_pd(s);
     return r;
 }
 
 /* Set vector elements from two 2D vectors. */
-csr_inline vec4
-csr_math_vec4_set_vec2(const vec2 v1, const vec2 v2) {
+cml_inline vec4
+cml_math_vec4_set_vec2(const vec2 v1, const vec2 v2) {
     vec4 r;
     r.v = simde_mm256_set_pd(v2.v[1], v2.v[0], v1.v[1], v1.v[0]);
     return r;
 }
 
 /* Set vector elements to zero. */
-csr_inline vec4
-csr_math_vec4_zero(void) {
+cml_inline vec4
+cml_math_vec4_zero(void) {
     vec4 r;
     r.v = simde_mm256_setzero_pd();
     return r;
 }
 
 /* Set vector elements to one. */
-csr_inline vec4
-csr_math_vec4_one(void) {
+cml_inline vec4
+cml_math_vec4_one(void) {
     vec4 r;
     r.v = simde_mm256_set1_pd(1.0);
     return r;
 }
 
 /* Set vector elements to infinity. */
-csr_inline vec4
-csr_math_vec4_inf(void) {
+cml_inline vec4
+cml_math_vec4_inf(void) {
     vec4 r;
     r.v = simde_mm256_set1_pd(HUGE_VAL);
     return r;
@@ -1556,96 +1556,96 @@ csr_math_vec4_inf(void) {
 /*----------------------*/
 
 /* Add two vectors. */
-csr_inline vec4
-csr_math_vec4_add(const vec4 a, const vec4 b) {
+cml_inline vec4
+cml_math_vec4_add(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_add_pd(a.v, b.v);
     return r;
 }
 
 /* Add a vector and a scalar. */
-csr_inline vec4
-csr_math_vec4_add_scalar(const vec4 v, const f64 s) {
+cml_inline vec4
+cml_math_vec4_add_scalar(const vec4 v, const f64 s) {
     vec4 r;
     r.v = simde_mm256_add_pd(v.v, simde_mm256_set1_pd(s));
     return r;
 }
 
 /* Subtract two vectors. */
-csr_inline vec4
-csr_math_vec4_sub(const vec4 a, const vec4 b) {
+cml_inline vec4
+cml_math_vec4_sub(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_sub_pd(a.v, b.v);
     return r;
 }
 
 /* Subtract a scalar from a vector. */
-csr_inline vec4
-csr_math_vec4_sub_scalar(const vec4 v, const f64 s) {
+cml_inline vec4
+cml_math_vec4_sub_scalar(const vec4 v, const f64 s) {
     vec4 r;
     r.v = simde_mm256_sub_pd(v.v, simde_mm256_set1_pd(s));
     return r;
 }
 
 /* Negate a vector. */
-csr_inline vec4
-csr_math_vec4_neg(const vec4 v) {
+cml_inline vec4
+cml_math_vec4_neg(const vec4 v) {
     vec4 r;
     r.v = simde_mm256_sub_pd(simde_mm256_setzero_pd(), v.v);
     return r;
 }
 
 /* Multiply two vectors. */
-csr_inline vec4
-csr_math_vec4_mul(const vec4 a, const vec4 b) {
+cml_inline vec4
+cml_math_vec4_mul(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_mul_pd(a.v, b.v);
     return r;
 }
 
 /* Multiply a vector and a scalar. */
-csr_inline vec4
-csr_math_vec4_mul_scalar(const vec4 v, const f64 s) {
+cml_inline vec4
+cml_math_vec4_mul_scalar(const vec4 v, const f64 s) {
     vec4 r;
     r.v = simde_mm256_mul_pd(v.v, simde_mm256_set1_pd(s));
     return r;
 }
 
 /* Divide two vectors. */
-csr_inline vec4
-csr_math_vec4_div(const vec4 a, const vec4 b) {
+cml_inline vec4
+cml_math_vec4_div(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_div_pd(a.v, b.v);
     return r;
 }
 
 /* Divide a vector by a scalar. */
-csr_inline vec4
-csr_math_vec4_div_scalar(const vec4 v, const f64 s) {
+cml_inline vec4
+cml_math_vec4_div_scalar(const vec4 v, const f64 s) {
     vec4 r;
     r.v = simde_mm256_div_pd(v.v, simde_mm256_set1_pd(s));
     return r;
 }
 
 /* Compute the reciprocal of a vector. */
-csr_inline vec4
-csr_math_vec4_rcp(const vec4 v) {
+cml_inline vec4
+cml_math_vec4_rcp(const vec4 v) {
     vec4 r;
     r.v = simde_mm256_div_pd(simde_mm256_set1_pd(1.0), v.v);
     return r;
 }
 
 /* Compute the square root of a vector. */
-csr_inline vec4
-csr_math_vec4_sqrt(const vec4 v) {
+cml_inline vec4
+cml_math_vec4_sqrt(const vec4 v) {
     vec4 r;
     r.v = simde_mm256_sqrt_pd(v.v);
     return r;
 }
 
 /* Compute the reciprocal square root of a vector. */
-csr_inline vec4
-csr_math_vec4_rsqrt(const vec4 v) {
+cml_inline vec4
+cml_math_vec4_rsqrt(const vec4 v) {
     vec4 r;
     r.v = simde_mm256_div_pd(
           simde_mm256_set1_pd(1.0), 
@@ -1654,8 +1654,8 @@ csr_math_vec4_rsqrt(const vec4 v) {
 }
 
 /* Compute the absolute value of a vector. */
-csr_inline vec4
-csr_math_vec4_abs(const vec4 v) {
+cml_inline vec4
+cml_math_vec4_abs(const vec4 v) {
     vec4 r;
     r.v = simde_mm256_andnot_pd(
           simde_mm256_set1_pd(-0.0), 
@@ -1664,16 +1664,16 @@ csr_math_vec4_abs(const vec4 v) {
 }
 
 /* Compute the minimum of two vectors. */
-csr_inline vec4
-csr_math_vec4_min(const vec4 a, const vec4 b) {
+cml_inline vec4
+cml_math_vec4_min(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_min_pd(a.v, b.v);
     return r;
 }
 
 /* Compute the maximum of two vectors. */
-csr_inline vec4
-csr_math_vec4_max(const vec4 a, const vec4 b) {
+cml_inline vec4
+cml_math_vec4_max(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_max_pd(a.v, b.v);
     return r;
@@ -1684,32 +1684,32 @@ csr_math_vec4_max(const vec4 a, const vec4 b) {
 /*----------------------*/
 
 /* Compare two vectors for equality. */
-csr_inline vec4
-csr_math_vec4_is_equal(const vec4 a, const vec4 b) {
+cml_inline vec4
+cml_math_vec4_is_equal(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_cmp_pd(a.v, b.v, SIMDE_CMP_EQ_OQ);
     return r;
 }
 
 /* Compare two vectors for inequality. */
-csr_inline vec4
-csr_math_vec4_is_not_equal(const vec4 a, const vec4 b) {
+cml_inline vec4
+cml_math_vec4_is_not_equal(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_cmp_pd(a.v, b.v, SIMDE_CMP_NEQ_UQ);
     return r;
 }
 
 /* Compare two vectors for less than. */
-csr_inline vec4
-csr_math_vec4_is_less(const vec4 a, const vec4 b) {
+cml_inline vec4
+cml_math_vec4_is_less(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_cmp_pd(a.v, b.v, SIMDE_CMP_LT_OQ);
     return r;
 }
 
 /* Compare two vectors for greater than. */
-csr_inline vec4
-csr_math_vec4_is_greater(const vec4 a, const vec4 b) {
+cml_inline vec4
+cml_math_vec4_is_greater(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_cmp_pd(a.v, b.v, SIMDE_CMP_GT_OQ);
     return r;
@@ -1720,8 +1720,8 @@ csr_math_vec4_is_greater(const vec4 a, const vec4 b) {
 /*---------------------------*/
 
 /* Compute the dot product of two vectors. */
-csr_inline f64
-csr_math_vec4_dot_product(const vec4 a, const vec4 b) {
+cml_inline f64
+cml_math_vec4_dot_product(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_mul_pd(a.v, b.v);
     r.v = simde_mm256_hadd_pd(r.v, r.v);
@@ -1730,8 +1730,8 @@ csr_math_vec4_dot_product(const vec4 a, const vec4 b) {
 }
 
 /* Compute the cross product of two vectors. */
-csr_inline vec4
-csr_math_vec4_cross_product(const vec4 a, const vec4 b) {
+cml_inline vec4
+cml_math_vec4_cross_product(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_sub_pd(
           simde_mm256_mul_pd(
@@ -1744,8 +1744,8 @@ csr_math_vec4_cross_product(const vec4 a, const vec4 b) {
 }
 
 /* Compute the length of a vector. */
-csr_inline f64
-csr_math_vec4_length(const vec4 v) {
+cml_inline f64
+cml_math_vec4_length(const vec4 v) {
     vec4 r;
     r.v = simde_mm256_mul_pd(v.v, v.v);
     r.v = simde_mm256_hadd_pd(r.v, r.v);
@@ -1754,8 +1754,8 @@ csr_math_vec4_length(const vec4 v) {
 }
 
 /* Compute the squared length of a vector. */
-csr_inline f64
-csr_math_vec4_length_squared(const vec4 v) {
+cml_inline f64
+cml_math_vec4_length_squared(const vec4 v) {
     vec4 r;
     r.v = simde_mm256_mul_pd(v.v, v.v);
     r.v = simde_mm256_hadd_pd(r.v, r.v);
@@ -1764,8 +1764,8 @@ csr_math_vec4_length_squared(const vec4 v) {
 }
 
 /* Normalize a vector. */
-csr_inline vec4
-csr_math_vec4_normalize(const vec4 v) {
+cml_inline vec4
+cml_math_vec4_normalize(const vec4 v) {
     vec4 r;
     r.v = simde_mm256_div_pd(v.v, 
           simde_mm256_sqrt_pd(
@@ -1774,8 +1774,8 @@ csr_math_vec4_normalize(const vec4 v) {
 }
 
 /* Compute the distance between two vectors. */
-csr_inline f64
-csr_math_vec4_distance(const vec4 a, const vec4 b) {
+cml_inline f64
+cml_math_vec4_distance(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_sub_pd(a.v, b.v);
     r.v = simde_mm256_mul_pd(r.v, r.v);
@@ -1785,8 +1785,8 @@ csr_math_vec4_distance(const vec4 a, const vec4 b) {
 }
 
 /* Compute the squared distance between two vectors. */
-csr_inline f64
-csr_math_vec4_distance_squared(const vec4 a, const vec4 b) {
+cml_inline f64
+cml_math_vec4_distance_squared(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_sub_pd(a.v, b.v);
     r.v = simde_mm256_mul_pd(r.v, r.v);
@@ -1796,8 +1796,8 @@ csr_math_vec4_distance_squared(const vec4 a, const vec4 b) {
 }
 
 /* Compute the linear interpolation between two vectors. */
-csr_inline vec4
-csr_math_vec4_lerp(const vec4 a, const vec4 b, const f64 t) {
+cml_inline vec4
+cml_math_vec4_lerp(const vec4 a, const vec4 b, const f64 t) {
     vec4 r;
     r.v = simde_mm256_add_pd(a.v, 
           simde_mm256_mul_pd(
@@ -1807,8 +1807,8 @@ csr_math_vec4_lerp(const vec4 a, const vec4 b, const f64 t) {
 }
 
 /* Compute the reflection of a vector. */
-csr_inline vec4
-csr_math_vec4_reflect(const vec4 v, const vec4 n) {
+cml_inline vec4
+cml_math_vec4_reflect(const vec4 v, const vec4 n) {
     vec4 r;
     r.v = simde_mm256_sub_pd(v.v, 
           simde_mm256_mul_pd(
@@ -1821,11 +1821,11 @@ csr_math_vec4_reflect(const vec4 v, const vec4 n) {
 }
 
 /* Compute the refraction of a vector. */
-csr_inline vec4
-csr_math_vec4_refract(const vec4 v, const vec4 n, const f64 eta) {
+cml_inline vec4
+cml_math_vec4_refract(const vec4 v, const vec4 n, const f64 eta) {
     vec4 r;
-    f64 k = 1.0 - eta * eta * (1.0 - csr_math_vec4_dot_product(v, n) * 
-                                     csr_math_vec4_dot_product(v, n));
+    f64 k = 1.0 - eta * eta * (1.0 - cml_math_vec4_dot_product(v, n) * 
+                                     cml_math_vec4_dot_product(v, n));
     if (k < 0.0) {
         r.v = simde_mm256_set1_pd(0.0);
     } else {
@@ -1834,25 +1834,25 @@ csr_math_vec4_refract(const vec4 v, const vec4 n, const f64 eta) {
               simde_mm256_set1_pd(eta), v.v), 
               simde_mm256_mul_pd(
               simde_mm256_set1_pd(eta * 
-              csr_math_vec4_dot_product(v, n) - sqrt(k)), n.v));
+              cml_math_vec4_dot_product(v, n) - sqrt(k)), n.v));
     }
     return r;
 }
 
 /* Angle between two vectors. */
-csr_inline f64
-csr_math_vec4_angle(const vec4 a, const vec4 b) {
+cml_inline f64
+cml_math_vec4_angle(const vec4 a, const vec4 b) {
     vec4 r;
     r.v = simde_mm256_mul_pd(a.v, b.v);
     r.v = simde_mm256_hadd_pd(r.v, r.v);
     r.v = simde_mm256_hadd_pd(r.v, r.v);
-    return acos(r.v[0] / (csr_math_vec4_length(a) * 
-                          csr_math_vec4_length(b)));
+    return acos(r.v[0] / (cml_math_vec4_length(a) * 
+                          cml_math_vec4_length(b)));
 }
 
 /* Print a vector. */
-csr_inline void
-csr_math_vec4_print(const vec4 v) {
+cml_inline void
+cml_math_vec4_print(const vec4 v) {
     printf("%f %f %f %f ", v.v[0], v.v[1], v.v[2], v.v[3]);
 }
 
@@ -1869,8 +1869,8 @@ typedef struct mat4 {
 /*------------------*/
 
 /* Create a 4x4 matrix. */
-csr_inline mat4
-csr_math_mat4(const f64 m00, const f64 m01, const f64 m02, const f64 m03,
+cml_inline mat4
+cml_math_mat4(const f64 m00, const f64 m01, const f64 m02, const f64 m03,
               const f64 m10, const f64 m11, const f64 m12, const f64 m13,
               const f64 m20, const f64 m21, const f64 m22, const f64 m23,
               const f64 m30, const f64 m31, const f64 m32, const f64 m33) {
@@ -1883,8 +1883,8 @@ csr_math_mat4(const f64 m00, const f64 m01, const f64 m02, const f64 m03,
 }
 
 /* Add two matrices. */
-csr_inline mat4
-csr_math_mat4_add(const mat4 a, const mat4 b) {
+cml_inline mat4
+cml_math_mat4_add(const mat4 a, const mat4 b) {
     mat4 r;
     r.m[0] = simde_mm256_add_pd(a.m[0], b.m[0]);
     r.m[1] = simde_mm256_add_pd(a.m[1], b.m[1]);
@@ -1894,8 +1894,8 @@ csr_math_mat4_add(const mat4 a, const mat4 b) {
 }
 
 /* Subtract two matrices. */
-csr_inline mat4
-csr_math_mat4_sub(const mat4 a, const mat4 b) {
+cml_inline mat4
+cml_math_mat4_sub(const mat4 a, const mat4 b) {
     mat4 r;
     r.m[0] = simde_mm256_sub_pd(a.m[0], b.m[0]);
     r.m[1] = simde_mm256_sub_pd(a.m[1], b.m[1]);
@@ -1905,8 +1905,8 @@ csr_math_mat4_sub(const mat4 a, const mat4 b) {
 }
 
 /* Multiply two matrices. */
-csr_inline mat4
-csr_math_mat4_mul(const mat4 a, const mat4 b) {
+cml_inline mat4
+cml_math_mat4_mul(const mat4 a, const mat4 b) {
     mat4 r;
     r.m[0] = simde_mm256_set1_pd(0.0);
     r.m[1] = simde_mm256_set1_pd(0.0);
@@ -1923,8 +1923,8 @@ csr_math_mat4_mul(const mat4 a, const mat4 b) {
 }
 
 /* Multiply a matrix by a scalar. */
-csr_inline mat4
-csr_math_mat4_mul_scalar(const mat4 a, const f64 s) {
+cml_inline mat4
+cml_math_mat4_mul_scalar(const mat4 a, const f64 s) {
     mat4 r;
     r.m[0] = simde_mm256_mul_pd(a.m[0], simde_mm256_set1_pd(s));
     r.m[1] = simde_mm256_mul_pd(a.m[1], simde_mm256_set1_pd(s));
@@ -1934,8 +1934,8 @@ csr_math_mat4_mul_scalar(const mat4 a, const f64 s) {
 }
 
 /* Create a 4x4 identity matrix. */
-csr_inline mat4
-csr_math_mat4_identity(void) {
+cml_inline mat4
+cml_math_mat4_identity(void) {
     mat4 r;
     r.m[0] = simde_mm256_set_pd(1.0, 0.0, 0.0, 0.0);
     r.m[1] = simde_mm256_set_pd(0.0, 1.0, 0.0, 0.0);
@@ -1945,8 +1945,8 @@ csr_math_mat4_identity(void) {
 }
 
 /* Create a 4x4 translation matrix. */
-csr_inline mat4
-csr_math_mat4_translation(const f64 x, const f64 y, const f64 z) {
+cml_inline mat4
+cml_math_mat4_translation(const f64 x, const f64 y, const f64 z) {
     mat4 r;
     r.m[0] = simde_mm256_set_pd(1.0, 0.0, 0.0, 0.0);
     r.m[1] = simde_mm256_set_pd(0.0, 1.0, 0.0, 0.0);
@@ -1956,8 +1956,8 @@ csr_math_mat4_translation(const f64 x, const f64 y, const f64 z) {
 }
 
 /* Create a 4x4 scaling matrix. */
-csr_inline mat4
-csr_math_mat4_scaling(const f64 x, const f64 y, const f64 z) {
+cml_inline mat4
+cml_math_mat4_scaling(const f64 x, const f64 y, const f64 z) {
     mat4 r;
     r.m[0] = simde_mm256_set_pd(x, 0.0, 0.0, 0.0);
     r.m[1] = simde_mm256_set_pd(0.0, y, 0.0, 0.0);
@@ -1967,8 +1967,8 @@ csr_math_mat4_scaling(const f64 x, const f64 y, const f64 z) {
 }
 
 /* Transpose of a 4x4 matrix. */
-csr_inline mat4
-csr_math_mat4_transpose(const mat4 a) {
+cml_inline mat4
+cml_math_mat4_transpose(const mat4 a) {
     mat4 r;
     r.m[0][0] = a.m[0][0];
     r.m[0][1] = a.m[1][0];
@@ -1990,8 +1990,8 @@ csr_math_mat4_transpose(const mat4 a) {
 }
 
 /* Create a 4x4 rotation matrix. */
-csr_inline mat4
-csr_math_mat4_rotation(const f64 x, const f64 y, const f64 z, const f64 angle) {
+cml_inline mat4
+cml_math_mat4_rotation(const f64 x, const f64 y, const f64 z, const f64 angle) {
     mat4 r;
     f64 c = cos(angle);
     f64 s = sin(angle);
@@ -2010,8 +2010,8 @@ csr_math_mat4_rotation(const f64 x, const f64 y, const f64 z, const f64 angle) {
 }
 
 /* Determinant of a 4x4 matrix. */
-csr_inline f64
-csr_math_mat4_det(const mat4 a) {
+cml_inline f64
+cml_math_mat4_det(const mat4 a) {
     f64 r;
     f64 b00 = a.m[0][0] * a.m[1][1] - a.m[0][1] * a.m[1][0];
     f64 b01 = a.m[0][0] * a.m[1][2] - a.m[0][2] * a.m[1][0];
@@ -2030,8 +2030,8 @@ csr_math_mat4_det(const mat4 a) {
 }
 
 /* Inverse of a 4x4 matrix. */
-csr_inline mat4
-csr_math_mat4_inverse(const mat4 a) {
+cml_inline mat4
+cml_math_mat4_inverse(const mat4 a) {
     mat4 r;
     f64 b00 = a.m[0][0] * a.m[1][1] - a.m[0][1] * a.m[1][0];
     f64 b01 = a.m[0][0] * a.m[1][2] - a.m[0][2] * a.m[1][0];
@@ -2067,8 +2067,8 @@ csr_math_mat4_inverse(const mat4 a) {
 }
 
 /* Perspective projection matrix. */
-csr_inline mat4
-csr_math_mat4_perspective(const f64 fov,  const f64 aspect, 
+cml_inline mat4
+cml_math_mat4_perspective(const f64 fov,  const f64 aspect, 
                           const f64 near, const f64 far) {
     mat4 r;
     f64 f = 1.0 / tan(fov * 0.5);
@@ -2092,8 +2092,8 @@ csr_math_mat4_perspective(const f64 fov,  const f64 aspect,
 }
 
 /* Orthographic projection matrix. */
-csr_inline mat4
-csr_math_mat4_ortho(const f64 left,   const f64 right, 
+cml_inline mat4
+cml_math_mat4_ortho(const f64 left,   const f64 right, 
                     const f64 bottom, const f64 top, 
                     const f64 near,   const f64 far) {
     mat4 r;
@@ -2117,11 +2117,11 @@ csr_math_mat4_ortho(const f64 left,   const f64 right,
 }
 
 /* Look at matrix. */
-csr_inline mat4
-csr_math_mat4_look_at(const vec4 eye, const vec4 center, const vec4 up) {
-    vec4 f = csr_math_vec4_normalize(csr_math_vec4_sub(center, eye));
-    vec4 s = csr_math_vec4_normalize(csr_math_vec4_cross_product(f, up));
-    vec4 u = csr_math_vec4_cross_product(s, f);
+cml_inline mat4
+cml_math_mat4_look_at(const vec4 eye, const vec4 center, const vec4 up) {
+    vec4 f = cml_math_vec4_normalize(cml_math_vec4_sub(center, eye));
+    vec4 s = cml_math_vec4_normalize(cml_math_vec4_cross_product(f, up));
+    vec4 u = cml_math_vec4_cross_product(s, f);
     mat4 r;
     r.m[0][0] =  s.v[0];
     r.m[0][1] =  u.v[0];
@@ -2135,16 +2135,16 @@ csr_math_mat4_look_at(const vec4 eye, const vec4 center, const vec4 up) {
     r.m[2][1] =  u.v[2];
     r.m[2][2] = -f.v[2];
     r.m[2][3] = 0.0;
-    r.m[3][0] = -csr_math_vec4_dot_product(s, eye);
-    r.m[3][1] = -csr_math_vec4_dot_product(u, eye);
-    r.m[3][2] =  csr_math_vec4_dot_product(f, eye);
+    r.m[3][0] = -cml_math_vec4_dot_product(s, eye);
+    r.m[3][1] = -cml_math_vec4_dot_product(u, eye);
+    r.m[3][2] =  cml_math_vec4_dot_product(f, eye);
     r.m[3][3] = 1.0;
     return r;
 }
 
 /* Print matrix in a row-major format. */
-csr_inline void
-csr_math_mat4_print(const mat4 m) {
+cml_inline void
+cml_math_mat4_print(const mat4 m) {
     printf("%f %f %f %f\n", m.m[0][0], m.m[0][1], m.m[0][2], m.m[0][3]);
     printf("%f %f %f %f\n", m.m[1][0], m.m[1][1], m.m[1][2], m.m[1][3]);
     printf("%f %f %f %f\n", m.m[2][0], m.m[2][1], m.m[2][2], m.m[2][3]);
@@ -2161,32 +2161,32 @@ typedef struct quat {
 } quat;
 
 /* Quaternion identity. */
-csr_inline quat
-csr_math_quat_identity(void) {
+cml_inline quat
+cml_math_quat_identity(void) {
     quat r;
     r.q = simde_mm256_set_pd(0.0, 0.0, 0.0, 1.0);
     return r;
 }
 
 /* Quaternion addition. */
-csr_inline quat
-csr_math_quat_add(const quat a, const quat b) {
+cml_inline quat
+cml_math_quat_add(const quat a, const quat b) {
     quat r;
     r.q = simde_mm256_add_pd(a.q, b.q);
     return r;
 }
 
 /* Quaternion subtraction. */
-csr_inline quat
-csr_math_quat_sub(const quat a, const quat b) {
+cml_inline quat
+cml_math_quat_sub(const quat a, const quat b) {
     quat r;
     r.q = simde_mm256_sub_pd(a.q, b.q);
     return r;
 }
 
 /* Quaternion multiplication. */
-csr_inline quat
-csr_math_quat_mul(const quat a, const quat b) {
+cml_inline quat
+cml_math_quat_mul(const quat a, const quat b) {
     quat r;
     r.q = simde_mm256_add_pd(
           simde_mm256_add_pd(
@@ -2223,32 +2223,32 @@ csr_math_quat_mul(const quat a, const quat b) {
 }
 
 /* Quaternion negation. */
-csr_inline quat
-csr_math_quat_neg(const quat a) {
+cml_inline quat
+cml_math_quat_neg(const quat a) {
     quat r;
     r.q = simde_mm256_sub_pd(simde_mm256_setzero_pd(), a.q);
     return r;
 }
 
 /* Quaternion conjugation. */
-csr_inline quat
-csr_math_quat_conjugate(const quat a) {
+cml_inline quat
+cml_math_quat_conjugate(const quat a) {
     quat r;
     r.q = simde_mm256_xor_pd(a.q, simde_mm256_set_pd(-0.0, -0.0, -0.0, 0.0));
     return r;
 }
 
 /* Quaternion inverse. */
-csr_inline quat
-csr_math_quat_inverse(const quat a) {
+cml_inline quat
+cml_math_quat_inverse(const quat a) {
     quat r;
     r.q = simde_mm256_div_pd(simde_mm256_set_pd(0.0, 0.0, 0.0, 1.0), a.q);
     return r;
 }
 
 /* Quaternion length. */
-csr_inline f64
-csr_math_quat_length(const quat a) {
+cml_inline f64
+cml_math_quat_length(const quat a) {
     return sqrt(a.q[0] * a.q[0] + 
                 a.q[1] * a.q[1] + 
                 a.q[2] * a.q[2] + 
@@ -2256,17 +2256,17 @@ csr_math_quat_length(const quat a) {
 }
 
 /* Quaternion normalization. */
-csr_inline quat
-csr_math_quat_normalize(const quat a) {
+cml_inline quat
+cml_math_quat_normalize(const quat a) {
     quat r;
     r.q = simde_mm256_div_pd(a.q, 
-          simde_mm256_set1_pd(csr_math_quat_length(a)));
+          simde_mm256_set1_pd(cml_math_quat_length(a)));
     return r;
 }
 
 /* Quaternion rotation. */
-csr_inline vec4
-csr_math_quat_rotate(const quat a, const vec4 b) {
+cml_inline vec4
+cml_math_quat_rotate(const quat a, const vec4 b) {
     quat r;
     r.q = simde_mm256_add_pd(
           simde_mm256_add_pd(
@@ -2305,8 +2305,8 @@ csr_math_quat_rotate(const quat a, const vec4 b) {
 }
 
 /* Quaternion to matrix. */
-csr_inline mat4
-csr_math_quat_to_mat4(const quat a) {
+cml_inline mat4
+cml_math_quat_to_mat4(const quat a) {
     mat4 r;
     r.m[0][0] = 1.0 - 2.0 * a.q[2] * a.q[2] - 2.0 * a.q[3] * a.q[3];
     r.m[0][1] = 2.0       * a.q[1] * a.q[2] - 2.0 * a.q[3] * a.q[0];
@@ -2328,36 +2328,36 @@ csr_math_quat_to_mat4(const quat a) {
 }
 
 /* Quaternion to vector. */
-csr_inline vec4
-csr_math_quat_to_vec4(const quat a) {
+cml_inline vec4
+cml_math_quat_to_vec4(const quat a) {
     vec4 r;
     r.v = a.q;
     return r;
 }
 
 /* Pitch from quaternion. */
-csr_inline f64
-csr_math_quat_pitch(const quat a) {
+cml_inline f64
+cml_math_quat_pitch(const quat a) {
     return atan2(2.0       * (a.q[0] * a.q[1] + a.q[2] * a.q[3]), 
                  1.0 - 2.0 * (a.q[1] * a.q[1] + a.q[2] * a.q[2]));
 }
 
 /* Yaw from quaternion. */
-csr_inline f64
-csr_math_quat_yaw(const quat a) {
+cml_inline f64
+cml_math_quat_yaw(const quat a) {
     return asin(2.0 * (a.q[0] * a.q[2] - a.q[3] * a.q[1]));
 }
 
 /* Roll from quaternion. */
-csr_inline f64
-csr_math_quat_roll(const quat a) {
+cml_inline f64
+cml_math_quat_roll(const quat a) {
     return atan2(2.0       * (a.q[0] * a.q[3] + a.q[1] * a.q[2]), 
                  1.0 - 2.0 * (a.q[2] * a.q[2] + a.q[3] * a.q[3]));
 }
 
 /* Quaternion from pitch, yaw and roll. */
-csr_inline quat
-csr_math_quat_from_pitch_yaw_roll(const f64 pitch, const f64 yaw, 
+cml_inline quat
+cml_math_quat_from_pitch_yaw_roll(const f64 pitch, const f64 yaw, 
                                   const f64 roll) {
     quat r;
     f64 c1 = cos(pitch * 0.5);
@@ -2374,8 +2374,8 @@ csr_math_quat_from_pitch_yaw_roll(const f64 pitch, const f64 yaw,
 }
 
 /* Quaternion from axis and angle. */
-csr_inline quat
-csr_math_quat_from_axis_angle(const vec4 axis, const f64 angle) {
+cml_inline quat
+cml_math_quat_from_axis_angle(const vec4 axis, const f64 angle) {
     quat r;
     f64 s  = sin(angle * 0.5);
     r.q[0] = cos(angle * 0.5);
@@ -2386,8 +2386,8 @@ csr_math_quat_from_axis_angle(const vec4 axis, const f64 angle) {
 }
 
 /* Quaternion from matrix. */
-csr_inline quat
-csr_math_quat_from_mat4(const mat4 a) {
+cml_inline quat
+cml_math_quat_from_mat4(const mat4 a) {
     quat r;
     f64 tr = a.m[0][0] + a.m[1][1] + a.m[2][2];
     if (tr > 0.0) {
@@ -2414,8 +2414,8 @@ csr_math_quat_from_mat4(const mat4 a) {
 }
 
 /* Quaternion from vector. */
-csr_inline quat
-csr_math_quat_from_vec4(const vec4 a) {
+cml_inline quat
+cml_math_quat_from_vec4(const vec4 a) {
     quat r;
     r.q[0] = a.v[0];
     r.q[1] = a.v[1];
@@ -2425,7 +2425,7 @@ csr_math_quat_from_vec4(const vec4 a) {
 }
 
 /* Print quaternion. */
-csr_inline void
-csr_math_quat_print(const quat a) {
+cml_inline void
+cml_math_quat_print(const quat a) {
     printf("quat(%f, %f, %f, %f)\n", a.q[0], a.q[1], a.q[2], a.q[3]);
 }
