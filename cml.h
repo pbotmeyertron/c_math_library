@@ -87,11 +87,11 @@ typedef double    f64;
 /*===========================================================================*/
 
 /* 128-Bit Vector of 32-Bit Floating-Point Numbers */
-typedef simde__m128d f32x4;
+typedef simde__m128 f32x4;
 /* 256-Bit Vector of 32-Bit Floating-Point Numbers */
-typedef simde__m256d f32x8;
+typedef simde__m256 f32x8;
 /* 512-Bit Vector of 32-Bit Floating-Point Numbers */
-typedef simde__m512d f32x16;
+typedef simde__m512 f32x16;
 
 /* 128-Bit Vector of 64-Bit Floating-Point Numbers */
 typedef simde__m128d f64x2;
