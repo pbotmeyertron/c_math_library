@@ -6,7 +6,7 @@
 // #include "sleef.h"
 
 /* SIMDE Headers */
-#include "simde/simde/x86/avx512.h"
+#include "simde/x86/avx512.h"
 
 /* Standard Headers */
 #include <stdint.h>
@@ -2011,61 +2011,89 @@ cml_math_mat4_rotation(const f64 x, const f64 y, const f64 z, const f64 angle) {
     return r;
 }
 
-/* Determinant of a 4x4 matrix. */
+/* Determinant of matrix. */
 cml_inline f64
-cml_math_mat4_det(const mat4 a) {
-    f64 r;
-    f64 b00 = a.m[0][0] * a.m[1][1] - a.m[0][1] * a.m[1][0];
-    f64 b01 = a.m[0][0] * a.m[1][2] - a.m[0][2] * a.m[1][0];
-    f64 b02 = a.m[0][0] * a.m[1][3] - a.m[0][3] * a.m[1][0];
-    f64 b03 = a.m[0][1] * a.m[1][2] - a.m[0][2] * a.m[1][1];
-    f64 b04 = a.m[0][1] * a.m[1][3] - a.m[0][3] * a.m[1][1];
-    f64 b05 = a.m[0][2] * a.m[1][3] - a.m[0][3] * a.m[1][2];
-    f64 b06 = a.m[2][0] * a.m[3][1] - a.m[2][1] * a.m[3][0];
-    f64 b07 = a.m[2][0] * a.m[3][2] - a.m[2][2] * a.m[3][0];
-    f64 b08 = a.m[2][0] * a.m[3][3] - a.m[2][3] * a.m[3][0];
-    f64 b09 = a.m[2][1] * a.m[3][2] - a.m[2][2] * a.m[3][1];
-    f64 b10 = a.m[2][1] * a.m[3][3] - a.m[2][3] * a.m[3][1];
-    f64 b11 = a.m[2][2] * a.m[3][3] - a.m[2][3] * a.m[3][2];
-    r = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
-    return r;
+cml_math_mat4_determinant(const mat4 mat) {
+    f64 t[6];
+    f64 a = mat.m[0][0], b = mat.m[0][1], c = mat.m[0][2], d = mat.m[0][3],
+      e = mat.m[1][0], f = mat.m[1][1], g = mat.m[1][2], h = mat.m[1][3],
+      i = mat.m[2][0], j = mat.m[2][1], k = mat.m[2][2], l = mat.m[2][3],
+      m = mat.m[3][0], n = mat.m[3][1], o = mat.m[3][2], p = mat.m[3][3];
+    t[0] = k * p - o * l; 
+    t[1] = j * p - n * l; 
+    t[2] = j * o - n * k;
+    t[3] = i * p - m * l; 
+    t[4] = i * o - m * k; 
+    t[5] = i * n - m * j;
+    return a * (f * t[0] - g * t[1] + h * t[2]) -
+           b * (e * t[0] - g * t[3] + h * t[4]) +
+           c * (e * t[1] - f * t[3] + h * t[5]) -
+           d * (e * t[2] - f * t[4] + g * t[5]);
 }
 
-/* Inverse of a 4x4 matrix. */
+/* Matrix multiplication by scalar. */
 cml_inline mat4
-cml_math_mat4_inverse(const mat4 a) {
-    mat4 r;
-    f64 b00 = a.m[0][0] * a.m[1][1] - a.m[0][1] * a.m[1][0];
-    f64 b01 = a.m[0][0] * a.m[1][2] - a.m[0][2] * a.m[1][0];
-    f64 b02 = a.m[0][0] * a.m[1][3] - a.m[0][3] * a.m[1][0];
-    f64 b03 = a.m[0][1] * a.m[1][2] - a.m[0][2] * a.m[1][1];
-    f64 b04 = a.m[0][1] * a.m[1][3] - a.m[0][3] * a.m[1][1];
-    f64 b05 = a.m[0][2] * a.m[1][3] - a.m[0][3] * a.m[1][2];
-    f64 b06 = a.m[2][0] * a.m[3][1] - a.m[2][1] * a.m[3][0];
-    f64 b07 = a.m[2][0] * a.m[3][2] - a.m[2][2] * a.m[3][0];
-    f64 b08 = a.m[2][0] * a.m[3][3] - a.m[2][3] * a.m[3][0];
-    f64 b09 = a.m[2][1] * a.m[3][2] - a.m[2][2] * a.m[3][1];
-    f64 b10 = a.m[2][1] * a.m[3][3] - a.m[2][3] * a.m[3][1];
-    f64 b11 = a.m[2][2] * a.m[3][3] - a.m[2][3] * a.m[3][2];
-    f64 det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
-    f64 invdet = 1.0 / det;
-    r.m[0][0] = ( a.m[1][1] * b11 - a.m[1][2] * b10 + a.m[1][3] * b09) * invdet;
-    r.m[0][1] = (-a.m[0][1] * b11 + a.m[0][2] * b10 - a.m[0][3] * b09) * invdet;
-    r.m[0][2] = ( a.m[3][1] * b05 - a.m[3][2] * b04 + a.m[3][3] * b03) * invdet;
-    r.m[0][3] = (-a.m[2][1] * b05 + a.m[2][2] * b04 - a.m[2][3] * b03) * invdet;
-    r.m[1][0] = (-a.m[1][0] * b11 + a.m[1][2] * b08 - a.m[1][3] * b07) * invdet;
-    r.m[1][1] = ( a.m[0][0] * b11 - a.m[0][2] * b08 + a.m[0][3] * b07) * invdet;
-    r.m[1][2] = (-a.m[3][0] * b05 + a.m[3][2] * b02 - a.m[3][3] * b01) * invdet;
-    r.m[1][3] = ( a.m[2][0] * b05 - a.m[2][2] * b02 + a.m[2][3] * b01) * invdet;
-    r.m[2][0] = ( a.m[1][0] * b10 - a.m[1][1] * b08 + a.m[1][3] * b06) * invdet;
-    r.m[2][1] = (-a.m[0][0] * b10 + a.m[0][1] * b08 - a.m[0][3] * b06) * invdet;
-    r.m[2][2] = ( a.m[3][0] * b04 - a.m[3][1] * b02 + a.m[3][3] * b00) * invdet;
-    r.m[2][3] = (-a.m[2][0] * b04 + a.m[2][1] * b02 - a.m[2][3] * b00) * invdet;
-    r.m[3][0] = (-a.m[1][0] * b09 + a.m[1][1] * b07 - a.m[1][2] * b06) * invdet;
-    r.m[3][1] = ( a.m[0][0] * b09 - a.m[0][1] * b07 + a.m[0][2] * b06) * invdet;
-    r.m[3][2] = (-a.m[3][0] * b03 + a.m[3][1] * b01 - a.m[3][2] * b00) * invdet;
-    r.m[3][3] = ( a.m[2][0] * b03 - a.m[2][1] * b01 + a.m[2][2] * b00) * invdet;
-    return r;
+mat4_mul_scalar(const mat4 a, const f64 scalar) {
+    mat4 result;
+    result.m[0][0] = a.m[0][0] * scalar; result.m[0][1] = a.m[0][1] * scalar;
+    result.m[0][2] = a.m[0][2] * scalar; result.m[0][3] = a.m[0][3] * scalar;
+    result.m[1][0] = a.m[1][0] * scalar; result.m[1][1] = a.m[1][1] * scalar;
+    result.m[1][2] = a.m[1][2] * scalar; result.m[1][3] = a.m[1][3] * scalar;
+    result.m[2][0] = a.m[2][0] * scalar; result.m[2][1] = a.m[2][1] * scalar;
+    result.m[2][2] = a.m[2][2] * scalar; result.m[2][3] = a.m[2][3] * scalar;
+    result.m[3][0] = a.m[3][0] * scalar; result.m[3][1] = a.m[3][1] * scalar;
+    result.m[3][2] = a.m[3][2] * scalar; result.m[3][3] = a.m[3][3] * scalar;
+    return result;
+}   
+
+/* Inverse of matrix. */
+cml_inline mat4
+cml_math_mat4_inverse(const mat4 mat) {
+    mat4 dest;
+    f64 t[6];
+    f64 det;
+    f64 a = mat.m[0][0], b = mat.m[0][1], c = mat.m[0][2], d = mat.m[0][3],
+        e = mat.m[1][0], f = mat.m[1][1], g = mat.m[1][2], h = mat.m[1][3],
+        i = mat.m[2][0], j = mat.m[2][1], k = mat.m[2][2], l = mat.m[2][3],
+        m = mat.m[3][0], n = mat.m[3][1], o = mat.m[3][2], p = mat.m[3][3];
+    t[0] = k * p - o * l; 
+    t[1] = j * p - n * l; 
+    t[2] = j * o - n * k;
+    t[3] = i * p - m * l; 
+    t[4] = i * o - m * k; 
+    t[5] = i * n - m * j;
+    dest.m[0][0] =  f * t[0] - g * t[1] + h * t[2];
+    dest.m[1][0] =-(e * t[0] - g * t[3] + h * t[4]);
+    dest.m[2][0] =  e * t[1] - f * t[3] + h * t[5];
+    dest.m[3][0] =-(e * t[2] - f * t[4] + g * t[5]);
+    dest.m[0][1] =-(b * t[0] - c * t[1] + d * t[2]);
+    dest.m[1][1] =  a * t[0] - c * t[3] + d * t[4];
+    dest.m[2][1] =-(a * t[1] - b * t[3] + d * t[5]);
+    dest.m[3][1] =  a * t[2] - b * t[4] + c * t[5];
+    t[0] = g * p - o * h; 
+    t[1] = f * p - n * h; 
+    t[2] = f * o - n * g;
+    t[3] = e * p - m * h; 
+    t[4] = e * o - m * g; 
+    t[5] = e * n - m * f;
+    dest.m[0][2] =  b * t[0] - c * t[1] + d * t[2];
+    dest.m[1][2] =-(a * t[0] - c * t[3] + d * t[4]);
+    dest.m[2][2] =  a * t[1] - b * t[3] + d * t[5];
+    dest.m[3][2] =-(a * t[2] - b * t[4] + c * t[5]);
+    t[0] = g * l - k * h; 
+    t[1] = f * l - j * h; 
+    t[2] = f * k - j * g;
+    t[3] = e * l - i * h; 
+    t[4] = e * k - i * g; 
+    t[5] = e * j - i * f;
+    dest.m[0][3] =-(b * t[0] - c * t[1] + d * t[2]);
+    dest.m[1][3] =  a * t[0] - c * t[3] + d * t[4];
+    dest.m[2][3] =-(a * t[1] - b * t[3] + d * t[5]);
+    dest.m[3][3] =  a * t[2] - b * t[4] + c * t[5];
+    det = 1.0 / (a * dest.m[0][0] + b * dest.m[1][0]
+               + c * dest.m[2][0] + d * dest.m[3][0]);
+    mat4_mul_scalar(dest, det);
+    return dest;
 }
 
 /* Perspective projection matrix. */
